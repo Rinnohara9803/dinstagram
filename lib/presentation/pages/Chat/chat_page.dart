@@ -141,8 +141,12 @@ class _ChatPageState extends State<ChatPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            _replyText,
+                          Expanded(
+                            child: Text(
+                              _replyText,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                           ),
                           IconButton(
                             onPressed: () {
