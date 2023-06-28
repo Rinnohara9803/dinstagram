@@ -1,8 +1,11 @@
+import 'package:dinstagram/apis/chat_apis.dart';
 import 'package:dinstagram/presentation/pages/Chat/chats_page.dart';
 import 'package:dinstagram/presentation/pages/Login/login_page.dart';
-import 'package:dinstagram/presentation/pages/Splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import '../../../apis/user_apis.dart';
+import '../../../models/chat_user.dart';
+import 'package:collection/collection.dart';
 import '../../../services/auth_service.dart';
 import '../Home/home_page.dart';
 import 'widgets/custom_popup_menubutton.dart';
@@ -140,7 +143,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   Page2(),
                   Page3(),
                   Page4(),
-                  Page5(),
+                  Page4(),
                 ],
               ),
             ),
@@ -213,14 +216,16 @@ class _Page2State extends State<Page2> {
   final _pageController = PageController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        children: [
-          Container(
-            color: Colors.blue,
-          ),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        body: PageView(
+          controller: _pageController,
+          children: [
+            Container(
+              color: Colors.blue,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -257,36 +262,6 @@ class _Page4State extends State<Page4> {
     return Scaffold(
       body: Container(
         color: Colors.grey,
-      ),
-    );
-  }
-}
-
-class Page5 extends StatefulWidget {
-  const Page5({super.key});
-
-  @override
-  State<Page5> createState() => _Page5State();
-}
-
-class _Page5State extends State<Page5> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: Center(
-          child: TextButton(
-            onPressed: () async {
-              await AuthService.logOut().then((value) {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    LoginPage.routename, (route) => false);
-              });
-            },
-            child: const Text(
-              'Log out',
-            ),
-          ),
-        ),
       ),
     );
   }

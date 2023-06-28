@@ -54,7 +54,7 @@ class _ChatsPageState extends State<ChatsPage> {
                   }
                 }
                 if (users.isEmpty) {
-                  return Center(
+                  return const Center(
                     child: Text('No users found.'),
                   );
                 }

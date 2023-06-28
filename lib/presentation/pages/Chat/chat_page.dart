@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dinstagram/models/chat_message.dart';
 import 'package:dinstagram/models/chat_user.dart';
 import 'package:dinstagram/presentation/pages/Chat/call_screen.dart';
+import 'package:dinstagram/presentation/pages/Dashboard/dashboard_page.dart';
 import 'package:dinstagram/services/sound_recorder.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:record_mp3/record_mp3.dart';
 import '../../../apis/chat_apis.dart';
 import '../../../utilities/my_date_util.dart';
+import '../Profile/profile_page.dart';
 import 'widgets/message_card.dart';
 
 class ChatPage extends StatefulWidget {
@@ -396,25 +398,34 @@ class _ChatPageState extends State<ChatPage> {
                   Icons.arrow_back,
                 ),
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(
-                    MediaQuery.of(context).size.height * .3),
-                child: CachedNetworkImage(
-                  height: MediaQuery.of(context).size.height * 0.055,
-                  width: MediaQuery.of(context).size.height * 0.055,
-                  fit: BoxFit.cover,
-                  imageUrl: widget.user.profileImage,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      const CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(chatUser: widget.user),
                     ),
-                  ),
-                  errorWidget: (context, url, error) => const CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                      MediaQuery.of(context).size.height * .3),
+                  child: CachedNetworkImage(
+                    height: MediaQuery.of(context).size.height * 0.055,
+                    width: MediaQuery.of(context).size.height * 0.055,
+                    fit: BoxFit.cover,
+                    imageUrl: widget.user.profileImage,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => const CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => const CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.person,
+                      ),
                     ),
                   ),
                 ),

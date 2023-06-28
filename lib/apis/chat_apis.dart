@@ -186,6 +186,14 @@ class ChatApis {
         .snapshots();
   }
 
+  // profile info snapshot
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getProfileInfo() {
+    return firestore
+        .collection('users')
+        .where('userId', isEqualTo: user!.uid)
+        .snapshots();
+  }
+
   // update online status of user
   static Future<void> updateActiveStatus(bool isOnline) async {
     firestore.collection('users').doc(user!.uid).update({

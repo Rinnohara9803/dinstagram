@@ -5,6 +5,7 @@ import 'package:dinstagram/presentation/pages/Register/register_with_email_page.
 import 'package:dinstagram/presentation/pages/Register/register_with_phone_page_one.dart';
 import 'package:dinstagram/presentation/pages/Splash/splash_page.dart';
 import 'package:dinstagram/presentation/pages/Verify-Email/verify_email_page.dart';
+import 'package:dinstagram/providers/followings_followers_provider.dart';
 import 'package:dinstagram/providers/profile_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<ProfileProvider>(
           create: (context) => ProfileProvider(),
+        ),
+        ChangeNotifierProvider<FollowingFollowersProvider>(
+          create: (context) => FollowingFollowersProvider(),
         ),
       ],
       child: MaterialApp(
