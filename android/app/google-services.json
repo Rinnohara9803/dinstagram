@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "666589655619",
+    "project_id": "nohara-591ab",
+    "storage_bucket": "nohara-591ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666589655619:android:b19ce2b41e6ea188ec9af6",
+        "android_client_info": {
+          "package_name": "com.example.instaclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666589655619-ijtc9bu6ans0pq2drgpnhqv2u0u32b5k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO23PZtCyWV0rxL4kcGKk4JTH7OzLph2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "666589655619-ijtc9bu6ans0pq2drgpnhqv2u0u32b5k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
