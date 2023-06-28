@@ -29,7 +29,7 @@ class _ChatsPageState extends State<ChatsPage> {
           ),
           title: Text(
             ChatApis.user!.email as String,
-            style: Theme.of(context).textTheme.titleMedium!,
+            style: Theme.of(context).textTheme.bodyMedium!,
           ),
         ),
         body: StreamBuilder(
