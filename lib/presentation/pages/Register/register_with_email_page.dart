@@ -1,9 +1,8 @@
-import 'package:dinstagram/presentation/pages/Register/email_confirmation_page.dart';
 import 'package:dinstagram/presentation/pages/Register/register_with_phone_page_one.dart';
 import 'package:dinstagram/presentation/resources/colors_manager.dart';
 import 'package:dinstagram/presentation/resources/constants/gradients_constants.dart';
+import 'package:dinstagram/presentation/resources/constants/sizedbox_constants.dart';
 import 'package:dinstagram/services/auth_service.dart';
-import 'package:dinstagram/services/email_service.dart';
 import 'package:dinstagram/utilities/snackbars.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -140,9 +139,7 @@ class _RegisterWithEmailPageOneState extends State<RegisterWithEmailPageOne> {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  SizedBoxConstants.sizedboxh5,
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 14,
@@ -214,9 +211,7 @@ class _RegisterWithEmailPageOneState extends State<RegisterWithEmailPageOne> {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  SizedBoxConstants.sizedboxh10,
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 14,

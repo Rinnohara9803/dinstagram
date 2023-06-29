@@ -46,10 +46,6 @@ class _ChatsPageState extends State<ChatsPage> {
                 if (snapshot.hasData) {
                   users = [];
                   for (var i in snapshot.data!.docs) {
-                    print(ChatApis.user!.uid);
-                    print(ChatUser.fromJson(i.data()).userId +
-                        ' ' +
-                        ChatUser.fromJson(i.data()).userName);
                     users.add(ChatUser.fromJson(i.data()));
                   }
                 }

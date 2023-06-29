@@ -1,11 +1,12 @@
 import 'package:dinstagram/providers/followings_followers_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
+// import 'package:collection/collection.dart';
 import 'package:provider/provider.dart';
 import '../../../apis/chat_apis.dart';
 import '../../../apis/user_apis.dart';
 import '../../../models/chat_user.dart';
 import '../../../services/sound_recorder.dart';
+import '../../resources/constants/sizedbox_constants.dart';
 import '../Chat/chat_page.dart';
 import '../Chat/chats_page.dart';
 import '../Dashboard/widgets/custom_popup_menubutton.dart';
@@ -136,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           NetworkImage(users[0].profileImage),
                                     ),
                                   ),
-                                  const profileDataWidget(
+                                  const ProfileDataWidget(
                                     data: 0,
                                     label: 'Posts',
                                   ),
@@ -149,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     builder: (context, snapshot) {
                                       if (snapshot.connectionState ==
                                           ConnectionState.waiting) {
-                                        return const profileDataWidget(
+                                        return const ProfileDataWidget(
                                           data: 0,
                                           label: 'Followers',
                                         );
@@ -158,7 +159,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       return Consumer<
                                               FollowingFollowersProvider>(
                                           builder: (context, ffpData, child) {
-                                        return profileDataWidget(
+                                        return ProfileDataWidget(
                                           data: ffpData.followers,
                                           label: 'Followers',
                                         );
@@ -174,7 +175,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     builder: (context, snapshot) {
                                       if (snapshot.connectionState ==
                                           ConnectionState.waiting) {
-                                        return const profileDataWidget(
+                                        return const ProfileDataWidget(
                                           data: 0,
                                           label: 'Followings',
                                         );
@@ -183,7 +184,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       return Consumer<
                                               FollowingFollowersProvider>(
                                           builder: (context, ffpData, child) {
-                                        return profileDataWidget(
+                                        return ProfileDataWidget(
                                           data: ffpData.followings,
                                           label: 'Followings',
                                         );
@@ -198,9 +199,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               const Text(
                                 'Oh, well whatever happens happens.',
                               ),
-                              const SizedBox(
-                                height: 20,
-                              ),
+                              SizedBoxConstants.sizedboxh20,
                               if (widget.chatUser.userId == UserApis.user!.uid)
                                 Row(
                                   children: [
@@ -211,8 +210,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           border: Border.all(
                                             color: Colors.white,
                                           ),
-                                          color:
-                                              Color.fromARGB(255, 38, 38, 39),
+                                          color: const Color.fromARGB(
+                                              255, 38, 38, 39),
                                           borderRadius: BorderRadius.circular(
                                             10,
                                           ),
@@ -325,9 +324,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     );
                                   },
                                 ),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              SizedBoxConstants.sizedboxh10,
                               Expanded(
                                 child: Column(
                                   children: [
@@ -379,10 +376,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-class profileDataWidget extends StatelessWidget {
+class ProfileDataWidget extends StatelessWidget {
   final int data;
   final String label;
-  const profileDataWidget({
+  const ProfileDataWidget({
     super.key,
     required this.data,
     required this.label,

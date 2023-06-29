@@ -5,10 +5,10 @@ import '../home_page.dart';
 class VideoStoryWidget extends StatefulWidget {
   final VideoStory videoStory;
 
-  VideoStoryWidget({required this.videoStory});
+  const VideoStoryWidget({super.key, required this.videoStory});
 
   @override
-  _VideoStoryWidgetState createState() => _VideoStoryWidgetState();
+  State<VideoStoryWidget> createState() => _VideoStoryWidgetState();
 }
 
 class _VideoStoryWidgetState extends State<VideoStoryWidget> {
@@ -49,7 +49,7 @@ class _VideoStoryWidgetState extends State<VideoStoryWidget> {
             ),
           );
         } else {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
       },
     );

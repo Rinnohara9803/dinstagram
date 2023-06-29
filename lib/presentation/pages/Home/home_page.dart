@@ -1,8 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
+import '../../resources/constants/sizedbox_constants.dart';
 
 class HomePage extends StatefulWidget {
   final ScrollController scrollController;
@@ -104,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
+                            children: const [
                               CircleAvatar(
                                 radius: 36,
                                 backgroundColor: Colors.grey,
@@ -112,9 +110,7 @@ class _HomePageState extends State<HomePage> {
                                   'https://c4.wallpaperflare.com/wallpaper/127/164/7/kid-luffy-monkey-d-luffy-one-piece-anime-hd-wallpaper-preview.jpg',
                                 ),
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
+                              SizedBoxConstants.sizedboxh5,
                               Text(
                                 'Your story',
                                 maxLines: 1,
@@ -122,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ],
                           ),
-                          Positioned(
+                          const Positioned(
                             bottom: 34,
                             right: -2,
                             child: CircleAvatar(
@@ -196,9 +192,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
+                                  SizedBoxConstants.sizedboxh5,
                                   Text(
                                     videoStory.username,
                                     maxLines: 1,
@@ -335,54 +329,4 @@ class VideoStory {
     required this.username,
     required this.avatarUrl,
   });
-}
-
-class GalleryScreen extends StatefulWidget {
-  @override
-  _GalleryScreenState createState() => _GalleryScreenState();
-}
-
-class _GalleryScreenState extends State<GalleryScreen> {
-  List<File> _photos = [];
-
-  // @override
-  // void initState() {
-  //   _pickPhotos();
-  //   super.initState();
-  // }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Gallery'),
-      ),
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 4.0,
-          mainAxisSpacing: 4.0,
-        ),
-        itemCount: _photos.length,
-        itemBuilder: (context, index) {
-          return Image.file(_photos[index]);
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _pickPhotos,
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-
-  Future<void> _pickPhotos() async {
-    final List<XFile>? pickedPhotos = await ImagePicker().pickMultiImage();
-
-    if (pickedPhotos != null) {
-      setState(() {
-        _photos =
-            pickedPhotos.map((pickedPhoto) => File(pickedPhoto.path)).toList();
-      });
-    }
-  }
 }

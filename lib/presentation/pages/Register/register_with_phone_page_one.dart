@@ -1,12 +1,10 @@
-import 'package:dinstagram/presentation/pages/Register/email_confirmation_page.dart';
 import 'package:dinstagram/presentation/resources/colors_manager.dart';
 import 'package:dinstagram/presentation/resources/constants/gradients_constants.dart';
-import 'package:dinstagram/services/email_service.dart';
 import 'package:dinstagram/utilities/snackbars.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../resources/constants/sizedbox_constants.dart';
 import '../Login/widgets/animed_hollow_button.dart';
 
 class RegisterWithPhonePageOne extends StatefulWidget {
@@ -129,9 +127,7 @@ class _RegisterWithPhonePageOneState extends State<RegisterWithPhonePageOne> {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
+                SizedBoxConstants.sizedboxh5,
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 14,

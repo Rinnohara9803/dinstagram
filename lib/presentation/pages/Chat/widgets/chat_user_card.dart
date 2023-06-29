@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../apis/chat_apis.dart';
 import '../../../../models/chat_user.dart';
+import '../../../resources/constants/sizedbox_constants.dart';
 
 class ChatUserCard extends StatefulWidget {
   final ChatUser chatUser;
@@ -86,7 +87,6 @@ class _ChatUserCardState extends State<ChatUserCard> {
               data?.map((e) => ChatMessage.fromJson(e.data())).toList() ?? [];
           if (list.isNotEmpty) {
             message = list[0];
-            print(message!.type.toString() + ' the type');
           }
 
           return ListTile(
@@ -141,9 +141,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                     message?.type ?? ChatMessageType.text,
                   ),
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
+                SizedBoxConstants.sizedboxw5,
                 Flexible(
                   child: Text(
                     message != null

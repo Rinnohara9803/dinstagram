@@ -40,7 +40,10 @@ dependencies:
     sdk: flutter
   flutter_keyboard_visibility: ^5.4.1
   flutter_sound: ^9.2.13
+  flutter_storage_path: ^1.0.4
   focused_menu: ^1.0.5
+  geolocator: ^9.0.2
+  google_maps_flutter: ^2.3.1
   http: ^0.13.5
   image_picker: ^0.8.9
   path_provider: ^2.0.15
@@ -48,8 +51,6 @@ dependencies:
   provider: ^6.0.5
   record_mp3: ^3.0.0
   video_player: ^2.6.1
-  # zego_uikit_prebuilt_call: ^3.7.1
-  # zego_uikit_signaling_plugin: ^2.1.10
 
 dev_dependencies:
   flutter_lints: ^2.0.0

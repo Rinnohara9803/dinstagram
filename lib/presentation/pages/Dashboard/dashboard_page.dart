@@ -1,13 +1,9 @@
-import 'package:dinstagram/apis/chat_apis.dart';
 import 'package:dinstagram/presentation/pages/Chat/chats_page.dart';
-import 'package:dinstagram/presentation/pages/Login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import '../../../apis/user_apis.dart';
-import '../../../models/chat_user.dart';
-import 'package:collection/collection.dart';
-import '../../../services/auth_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../Home/home_page.dart';
+import '../UploadPost/select_image_page.dart';
 import 'widgets/custom_popup_menubutton.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -25,9 +21,15 @@ class _DashboardPageState extends State<DashboardPage> {
 
   int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(int index) async {
     if (index == 2) {
-      Navigator.of(context).pushNamed(LoginPage.routename);
+      var permission = await Permission.storage.request();
+      if (permission == PermissionStatus.granted) {
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushNamed(SelectImagePage.routename);
+      } else {
+        throw 'Photos access denied.';
+      }
     } else {
       setState(() {
         _selectedIndex = index;
@@ -140,10 +142,10 @@ class _DashboardPageState extends State<DashboardPage> {
                   HomePage(
                     scrollController: _scrollController,
                   ),
-                  Page2(),
-                  Page3(),
-                  Page4(),
-                  Page4(),
+                  const Page2(),
+                  const Page3(),
+                  const Page4(),
+                  const Page4(),
                 ],
               ),
             ),
@@ -262,140 +264,6 @@ class _Page4State extends State<Page4> {
     return Scaffold(
       body: Container(
         color: Colors.grey,
-      ),
-    );
-  }
-}
-
-class LongPressButton extends StatefulWidget {
-  @override
-  _LongPressButtonState createState() => _LongPressButtonState();
-}
-
-class _LongPressButtonState extends State<LongPressButton>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _fadeAnimation;
-  bool isLongPress = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 300),
-    );
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeIn,
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  void _startFadeAnimation() {
-    _animationController.forward();
-  }
-
-  void _resetFadeAnimation() {
-    _animationController.reverse();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onLongPress: () {
-        setState(() {
-          isLongPress = true;
-        });
-        _startFadeAnimation();
-      },
-      // onLongPressEnd: (_) {
-      //   setState(() {
-      //     isLongPress = false;
-      //   });
-      //   _animationController.reset();
-      // },
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            width: 200,
-            height: 50,
-            color: Colors.blue,
-            child: Center(
-              child: Text(
-                'Long Press Me',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-          if (isLongPress) _buildTopPopup(),
-          if (isLongPress) _buildBottomPopup(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTopPopup() {
-    return Positioned(
-      top: -100,
-      left: 0,
-      right: 0,
-      child: FadeTransition(
-        opacity: _fadeAnimation,
-        child: Container(
-          height: 50,
-          color: Colors.yellow,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.thumb_up),
-              SizedBox(width: 10),
-              Icon(Icons.thumb_down),
-              SizedBox(width: 10),
-              Icon(Icons.favorite),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBottomPopup() {
-    return Positioned(
-      bottom: -100,
-      left: 0,
-      right: 0,
-      child: FadeTransition(
-        opacity: _fadeAnimation,
-        child: Container(
-          height: 100,
-          color: Colors.orange,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  print('Unsend');
-                },
-                child: Text('Unsend'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  print('Delete');
-                },
-                child: Text('Delete'),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

@@ -23,7 +23,7 @@ class CustomPopUpMenuButton extends StatelessWidget {
                 horizontal: 10,
               ),
               height: 48,
-              color: Color.fromARGB(255, 38, 37, 37),
+              color: const Color.fromARGB(255, 38, 37, 37),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,

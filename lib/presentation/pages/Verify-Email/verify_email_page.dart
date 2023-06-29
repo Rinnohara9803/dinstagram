@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:dinstagram/presentation/pages/Dashboard/initial_page.dart';
 import 'package:dinstagram/presentation/pages/Login/login_page.dart';
 import 'package:dinstagram/presentation/pages/Register/register_with_email_page.dart';
-import 'package:dinstagram/presentation/pages/Register/register_with_phone_page_one.dart';
 import 'package:dinstagram/presentation/resources/assets_manager.dart';
 import 'package:dinstagram/presentation/resources/colors_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/profile_provider.dart';
-import '../Dashboard/dashboard_page.dart';
+import '../../resources/constants/sizedbox_constants.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   static String routename = '/verify-email-page';
@@ -37,7 +36,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         });
       });
     } else {
-      Navigator.of(context).pushReplacementNamed(DashboardPage.routename);
+      Navigator.of(context).pushReplacementNamed(InitialPage.routename);
     }
     super.initState();
   }
@@ -48,6 +47,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     super.dispose();
   }
 
+  // check if the email is verified or not
   Future checkEmailVerified() async {
     await FirebaseAuth.instance.currentUser?.reload();
     setState(() {
@@ -59,6 +59,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     }
   }
 
+  // send verification email
   Future sendVerificationEmail() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
@@ -101,9 +102,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  SizedBoxConstants.sizedboxh20,
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 15,
@@ -152,9 +151,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  SizedBoxConstants.sizedboxh20,
                 ],
               ),
             ),

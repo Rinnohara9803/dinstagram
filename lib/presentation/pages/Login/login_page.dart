@@ -11,6 +11,7 @@ import 'package:dinstagram/presentation/resources/colors_manager.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/profile_provider.dart';
+import '../../resources/constants/sizedbox_constants.dart';
 import '../../widgets/general_textformfield.dart';
 import 'widgets/animed_hollow_button.dart';
 
@@ -94,9 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   iconData: Icons.mail_outline,
                   autoFocus: false,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                SizedBoxConstants.sizedboxh10,
                 GeneralTextFormField(
                   hasPrefixIcon: true,
                   hasSuffixIcon: true,
@@ -114,9 +113,9 @@ class _LoginPageState extends State<LoginPage> {
                   iconData: Icons.lock,
                   autoFocus: false,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                SizedBoxConstants.sizedboxh10,
+
+                // login button
                 GestureDetector(
                   onTap: () async {
                     await AuthService.signInWithEmail(
@@ -181,10 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                   AnimatedHollowButton(
                       onTap: navigateToRegisterPage,
                       label: 'Create new account'),
-                if (!isKeyboardVisible)
-                  const SizedBox(
-                    height: 20,
-                  ),
+                if (!isKeyboardVisible) SizedBoxConstants.sizedboxh20,
                 if (!isKeyboardVisible)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
