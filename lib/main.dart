@@ -4,6 +4,7 @@ import 'package:dinstagram/presentation/pages/Register/email_confirmation_page.d
 import 'package:dinstagram/presentation/pages/Register/register_with_email_page.dart';
 import 'package:dinstagram/presentation/pages/Register/register_with_phone_page_one.dart';
 import 'package:dinstagram/presentation/pages/Splash/splash_page.dart';
+import 'package:dinstagram/presentation/pages/UploadPost/select_image_page.dart';
 import 'package:dinstagram/presentation/pages/Verify-Email/verify_email_page.dart';
 import 'package:dinstagram/providers/followings_followers_provider.dart';
 import 'package:dinstagram/providers/profile_provider.dart';
@@ -45,9 +46,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // profile provider
         ChangeNotifierProvider<ProfileProvider>(
           create: (context) => ProfileProvider(),
         ),
+
+        // followings-followers provider
         ChangeNotifierProvider<FollowingFollowersProvider>(
           create: (context) => FollowingFollowersProvider(),
         ),
@@ -69,6 +73,7 @@ class MyApp extends StatelessWidget {
           InitialPage.routename: (context) => const InitialPage(),
           DashboardPage.routename: (context) => const DashboardPage(),
           ChatsPage.routename: (context) => const ChatsPage(),
+          SelectImagePage.routename: (context) => const SelectImagePage(),
         },
       ),
     );

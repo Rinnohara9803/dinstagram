@@ -66,38 +66,38 @@ class ChatApis {
   }
 
   // send video chat message
-  static Future<void> sendVideoRequestMessage(
-      ChatUser chatUser,
-      String msg,
-      String replyText,
-      ChatMessageType messageType,
-      VideoChat videoChat,
-      bool startCall) async {
-    final time = DateTime.now().millisecondsSinceEpoch.toString();
+  // static Future<void> sendVideoRequestMessage(
+  //     ChatUser chatUser,
+  //     String msg,
+  //     String replyText,
+  //     ChatMessageType messageType,
+  //     VideoChat videoChat,
+  //     bool startCall) async {
+  //   final time = DateTime.now().millisecondsSinceEpoch.toString();
 
-    final ChatMessage message = ChatMessage(
-      toId: chatUser.userId,
-      read: '',
-      message: msg,
-      type: messageType,
-      fromId: user!.uid,
-      sent: time,
-      replyText: replyText,
-      videoChat: VideoChat(
-        id: videoChat.id,
-        duration: videoChat.duration,
-        message: videoChat.message,
-      ),
-      isVideoCallOn: startCall,
-    );
-    final ref = firestore
-        .collection('chats/${getConversationId(chatUser.userId)}/messages/');
-    await ref.doc(time).set(message.toJson()).then((value) {
-      print('all good');
-    }).catchError((e) {
-      print(e.toString());
-    });
-  }
+  //   final ChatMessage message = ChatMessage(
+  //     toId: chatUser.userId,
+  //     read: '',
+  //     message: msg,
+  //     type: messageType,
+  //     fromId: user!.uid,
+  //     sent: time,
+  //     replyText: replyText,
+  //     videoChat: VideoChat(
+  //       id: videoChat.id,
+  //       duration: videoChat.duration,
+  //       message: videoChat.message,
+  //     ),
+  //     isVideoCallOn: startCall,
+  //   );
+  //   final ref = firestore
+  //       .collection('chats/${getConversationId(chatUser.userId)}/messages/');
+  //   await ref.doc(time).set(message.toJson()).then((value) {
+  //     print('all good');
+  //   }).catchError((e) {
+  //     print(e.toString());
+  //   });
+  // }
 
   // delete chat message from conversation
   static Future<void> deleteChatMessage(

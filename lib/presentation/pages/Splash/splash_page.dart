@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 // import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 // import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
-import '../../../apis/chat_apis.dart';
 import '../../../providers/profile_provider.dart';
+import '../../resources/constants/sizedbox_constants.dart';
 import '../Dashboard/initial_page.dart';
 import '../Verify-Email/verify_email_page.dart';
 
@@ -21,7 +21,9 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  // fetch user-info
   Future fetchUser() async {
+    // check auth-state-changes
     // ignore: unrelated_type_equality_checks
     if (FirebaseAuth.instance.authStateChanges().isEmpty == true) {
       Navigator.pushNamed(context, LoginPage.routename);
@@ -88,9 +90,7 @@ class _SplashPageState extends State<SplashPage> {
                     AssetsManager.distagramLogo,
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                SizedBoxConstants.sizedboxh10,
                 Text(
                   'Dinstagram',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(

@@ -1,22 +1,16 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dinstagram/models/chat_message.dart';
 import 'package:dinstagram/models/chat_user.dart';
-import 'package:dinstagram/presentation/pages/Chat/call_screen.dart';
-import 'package:dinstagram/presentation/pages/Dashboard/dashboard_page.dart';
 import 'package:dinstagram/services/sound_recorder.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:record_mp3/record_mp3.dart';
 import '../../../apis/chat_apis.dart';
 import '../../../utilities/my_date_util.dart';
+import '../../resources/constants/sizedbox_constants.dart';
 import '../Profile/profile_page.dart';
 import 'widgets/message_card.dart';
 
@@ -279,9 +273,7 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
           ),
-          const SizedBox(
-            width: 5,
-          ),
+          SizedBoxConstants.sizedboxw5,
 
           // text field to send message
           Expanded(
@@ -430,9 +422,7 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              SizedBoxConstants.sizedboxw10,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -8,6 +8,7 @@ import 'package:focused_menu/modals.dart';
 
 import '../../../../apis/chat_apis.dart';
 import '../../../../models/chat_message.dart';
+import '../../../resources/constants/sizedbox_constants.dart';
 
 class MessageCard extends StatefulWidget {
   final ChatMessage chatMessage;
@@ -93,7 +94,6 @@ class _MessageCardState extends State<MessageCard> {
 
   Widget greyMessageContent(
       String message, VideoChat videoChat, ChatMessageType messageType) {
-    print(messageType);
     switch (messageType) {
       case ChatMessageType.text:
         return Text(message);
@@ -285,9 +285,7 @@ class _MessageCardState extends State<MessageCard> {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              SizedBoxConstants.sizedboxw10,
               Text(
                 MyDateUtil.getFormattedTime(
                   context: context,
@@ -377,9 +375,7 @@ class _MessageCardState extends State<MessageCard> {
                       color: Colors.blue,
                     ),
                   if (widget.chatMessage.read.isNotEmpty)
-                    const SizedBox(
-                      width: 5,
-                    ),
+                    SizedBoxConstants.sizedboxw5,
                   Text(
                     MyDateUtil.getFormattedTime(
                       context: context,
@@ -392,9 +388,7 @@ class _MessageCardState extends State<MessageCard> {
                   ),
                 ],
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              SizedBoxConstants.sizedboxw10,
               Flexible(
                 child: FocusedMenuHolder(
                   blurSize: 0.2,

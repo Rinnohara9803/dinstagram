@@ -13,6 +13,7 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPageState extends State<InitialPage> {
+  // pages for tab-bar-view
   final List<Widget> pages = [
     Container(
       color: Colors.red,
@@ -23,6 +24,7 @@ class _InitialPageState extends State<InitialPage> {
         ),
       ),
     ),
+    // dashboard page
     const DashboardPage(),
     Container(
       color: Colors.blue,
@@ -37,6 +39,7 @@ class _InitialPageState extends State<InitialPage> {
 
   @override
   void initState() {
+    // update the users online status
     ChatApis.updateActiveStatus(true);
     SystemChannels.lifecycle.setMessageHandler((message) {
       if (ChatApis.auth.currentUser != null) {

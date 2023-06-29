@@ -3,11 +3,10 @@ import 'package:dinstagram/presentation/resources/colors_manager.dart';
 import 'package:dinstagram/presentation/resources/constants/gradients_constants.dart';
 import 'package:dinstagram/services/email_service.dart';
 import 'package:dinstagram/utilities/snackbars.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import '../../../services/shared_service.dart';
+import '../../resources/constants/sizedbox_constants.dart';
 import '../Login/widgets/animated_button.dart';
-import '../Login/widgets/animed_hollow_button.dart';
 
 class EmailConfirmationPage extends StatefulWidget {
   static const routename = '/email-confirmation-page';
@@ -36,7 +35,6 @@ class _EmailConfirmationPageState extends State<EmailConfirmationPage> {
   }
 
   void validateConfirmationCode() {
-    print('here');
     if (!_formKey.currentState!.validate()) {
       setState(() {
         hasError = true;
@@ -124,9 +122,7 @@ class _EmailConfirmationPageState extends State<EmailConfirmationPage> {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
+                SizedBoxConstants.sizedboxh5,
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 14,
