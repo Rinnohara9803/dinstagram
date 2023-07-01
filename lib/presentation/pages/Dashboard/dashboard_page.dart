@@ -1,7 +1,10 @@
 import 'package:dinstagram/presentation/pages/Chat/chats_page.dart';
+import 'package:dinstagram/presentation/pages/Profile/profile_page.dart';
+import 'package:dinstagram/providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import '../Home/home_page.dart';
 import '../UploadPost/select_image_page.dart';
 import 'widgets/custom_popup_menubutton.dart';
@@ -86,8 +89,6 @@ class _DashboardPageState extends State<DashboardPage> {
           ],
         ),
       );
-    } else if (_selectedIndex == 1) {
-      return Container();
     } else {
       return Container();
     }
@@ -145,7 +146,9 @@ class _DashboardPageState extends State<DashboardPage> {
                   const Page2(),
                   const Page3(),
                   const Page4(),
-                  const Page4(),
+                  ProfilePage(
+                    chatUser: Provider.of<ProfileProvider>(context).chatUser,
+                  ),
                 ],
               ),
             ),
@@ -182,10 +185,25 @@ class _DashboardPageState extends State<DashboardPage> {
                         : const Icon(Icons.movie_creation_outlined),
                     label: '',
                   ),
-                  const BottomNavigationBarItem(
+                  BottomNavigationBarItem(
                     icon: CircleAvatar(
-                      radius: 12,
                       backgroundColor: Colors.white,
+                      radius: _selectedIndex == 4 ? 14 : 12,
+                      child: CircleAvatar(
+                        radius: 12,
+                        backgroundColor: Colors.white,
+                        backgroundImage: NetworkImage(
+                          Provider.of<ProfileProvider>(context)
+                              .chatUser
+                              .profileImage,
+                        ),
+                        child: Provider.of<ProfileProvider>(context)
+                                .chatUser
+                                .profileImage
+                                .isNotEmpty
+                            ? null
+                            : const Icon(Icons.person),
+                      ),
                     ),
                     label: '',
                   ),
