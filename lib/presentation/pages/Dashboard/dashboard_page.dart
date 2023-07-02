@@ -70,17 +70,17 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
             Row(
               children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.favorite_outline,
-                  ),
+                const Icon(
+                  Icons.favorite_outline,
                 ),
-                IconButton(
-                  onPressed: () {
+                const SizedBox(
+                  width: 10,
+                ),
+                GestureDetector(
+                  onTap: () {
                     Navigator.of(context).pushNamed(ChatsPage.routename);
                   },
-                  icon: const Icon(
+                  child: const Icon(
                     Icons.message_outlined,
                   ),
                 ),

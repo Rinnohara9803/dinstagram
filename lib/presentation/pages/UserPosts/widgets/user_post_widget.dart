@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import '../../../../apis/chat_apis.dart';
 import '../../../../models/chat_user.dart';
 import '../../../../models/user_post.dart';
-import '../../UploadPost/apply_filters_page.dart';
+import '../../../../utilities/color_filters.dart';
+import 'animated_favorite_widget.dart';
+import 'expandable_text_widget.dart';
 
 class UserPostWidget extends StatefulWidget {
   const UserPostWidget({
@@ -81,6 +83,7 @@ class _UserPostWidgetState extends State<UserPostWidget>
         vertical: 10,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // user details
           StreamBuilder(
@@ -150,7 +153,7 @@ class _UserPostWidgetState extends State<UserPostWidget>
 
           // user-post images
           SizedBox(
-            height: 400,
+            height: post.images.length > 1 ? 400 : 450,
             width: double.infinity,
             child: Stack(
               children: [
@@ -199,40 +202,34 @@ class _UserPostWidgetState extends State<UserPostWidget>
                         children: [
                           Column(
                             children: [
-                              ColorFiltered(
-                                colorFilter: ColorFilters.colorFilterModels
-                                    .firstWhere((element) =>
-                                        element.filterName ==
-                                        post.images[index].filterName)
-                                    .colorFilter,
-                                child: CachedNetworkImage(
-                                  height: 400,
+                              CachedNetworkImage(
+                                height: post.images.length > 1 ? 400 : 450,
+                                width: double.infinity,
+                                fit: BoxFit.fitHeight,
+                                // colorBlendMode: ColorFilters.colorFilterModels
+                                //     .firstWhere((element) =>
+                                //         element.filterName ==
+                                //         post.images[index].filterName)
+                                //     .colorFilter,
+                                imageUrl: post.images[index].imageUrl,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) =>
+                                        SizedBox(
+                                  height: post.images.length > 1 ? 400 : 450,
                                   width: double.infinity,
-                                  fit: BoxFit.cover,
-                                  imageUrl: post.images[index].imageUrl,
-                                  progressIndicatorBuilder:
-                                      (context, url, downloadProgress) =>
-                                          const SizedBox(
-                                    height: 400,
-                                    width: double.infinity,
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      ),
+                                  child: const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
                                     ),
                                   ),
-                                  errorWidget: (context, url, error) =>
-                                      const SizedBox(
-                                    height: 400,
-                                    width: double.infinity,
-                                    child: Center(
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        child: Icon(
-                                          Icons.error,
-                                          color: Colors.red,
-                                        ),
-                                      ),
+                                ),
+                                errorWidget: (context, url, error) => SizedBox(
+                                  height: post.images.length > 1 ? 400 : 450,
+                                  width: double.infinity,
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.error,
+                                      color: Colors.red,
                                     ),
                                   ),
                                 ),
@@ -240,21 +237,10 @@ class _UserPostWidgetState extends State<UserPostWidget>
                             ],
                           ),
                           if (_showFavouriteIcon)
-                            Center(
-                              child: AnimatedBuilder(
-                                animation: _animationController1,
-                                builder: (context, child) {
-                                  return Transform.scale(
-                                    scale: _animation1.value,
-                                    child: Icon(
-                                      post.isLiked
-                                          ? Icons.favorite
-                                          : Icons.favorite_border,
-                                      color: Colors.white,
-                                    ),
-                                  );
-                                },
-                              ),
+                            AnimatedFavoriteWidget(
+                              animationController1: _animationController1,
+                              animation1: _animation1,
+                              post: post,
                             ),
                         ],
                       ),
@@ -333,89 +319,51 @@ class _UserPostWidgetState extends State<UserPostWidget>
                   ],
                 ),
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.bookmark,
+                  onPressed: () async {
+                    await post.toggleIsBookmarked();
+                  },
+                  icon: Icon(
+                    post.isBookmarked
+                        ? Icons.bookmark
+                        : Icons.bookmark_add_outlined,
                   ),
                 ),
               ],
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
+            child: Text(
+              '${post.likes.length} likes',
+              textAlign: TextAlign.start,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
+            child: StreamBuilder(
+              stream: ChatApis.getUserInfoWithUserId(post.userId),
+              builder: (context, snapshot) {
+                final data = snapshot.data?.docs;
+                final list =
+                    data?.map((e) => ChatUser.fromJson(e.data())).toList() ??
+                        [];
+                return ExpandableTextWidget(
+                  username: list.isEmpty ? 'username ' : '${list[0].userName} ',
+                  caption: post.caption,
+                );
+              },
             ),
           ),
         ],
       ),
     );
   }
-}
-
-class ColorFilters {
-  static List<ColorFilterModel> colorFilterModels = [
-    ColorFilterModel(
-      filterName: 'normal',
-      colorFilter: const ColorFilter.mode(
-        Colors.white,
-        BlendMode.dst,
-      ),
-    ),
-    ColorFilterModel(
-      filterName: 'grayscale',
-      colorFilter: const ColorFilter.matrix(<double>[
-        /// matrix
-        0.2126, 0.7152,
-        0.0722, 0, 0,
-        0.2126, 0.7152,
-        0.0722, 0, 0,
-        0.2126, 0.7152,
-        0.0722, 0, 0,
-        0, 0, 0, 1, 0
-      ]),
-    ),
-    ColorFilterModel(
-      filterName: 'sepia',
-      colorFilter: const ColorFilter.matrix(
-        [
-          /// matrix
-          0.393, 0.769,
-          0.189, 0, 0,
-          0.349, 0.686,
-          0.168, 0, 0,
-          0.272, 0.534,
-          0.131, 0, 0,
-          0, 0, 0, 1, 0,
-        ],
-      ),
-    ),
-    ColorFilterModel(
-      filterName: 'inverted',
-      colorFilter: const ColorFilter.matrix(
-        <double>[
-          /// matrix
-          -1, 0, 0, 0, 255,
-          0, -1, 0, 0, 255,
-          0, 0, -1, 0, 255,
-          0, 0, 0, 1, 0,
-        ],
-      ),
-    ),
-    ColorFilterModel(
-      filterName: 'colorBurn',
-      colorFilter: const ColorFilter.mode(
-        Colors.red,
-        BlendMode.colorBurn,
-      ),
-    ),
-    ColorFilterModel(
-      filterName: 'difference',
-      colorFilter: const ColorFilter.mode(
-        Colors.blue,
-        BlendMode.difference,
-      ),
-    ),
-    ColorFilterModel(
-      filterName: 'saturation',
-      colorFilter: const ColorFilter.mode(
-        Colors.red,
-        BlendMode.saturation,
-      ),
-    ),
-  ];
 }

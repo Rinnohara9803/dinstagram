@@ -74,6 +74,7 @@ class _AddPostDetailsPageState extends State<AddPostDetailsPage> {
             id: postId,
             images: imageUrls,
             likes: [],
+            bookmarks: [],
             caption: _captionController.text,
             latitude: _latLng == null ? 0 : _latLng!.latitude,
             longitude: _latLng == null ? 0 : _latLng!.longitude,
@@ -247,11 +248,16 @@ class _AddPostDetailsPageState extends State<AddPostDetailsPage> {
               Container(
                 color: Colors.black45,
                 child: Center(
-                  child: LinearProgressIndicator(
-                    backgroundColor: Colors.grey,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.blue.withOpacity(0.5),
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      LinearProgressIndicator(
+                        backgroundColor: Colors.grey,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.blue.withOpacity(0.5),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

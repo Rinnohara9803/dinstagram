@@ -1,6 +1,10 @@
+import 'package:dinstagram/providers/user_posts_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
+import '../../../providers/profile_provider.dart';
 import '../../resources/constants/sizedbox_constants.dart';
+import '../UserPosts/widgets/user_post_widget.dart';
 
 class HomePage extends StatefulWidget {
   final ScrollController scrollController;
@@ -10,7 +14,13 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin<HomePage> {
+  @override
+  bool get wantKeepAlive => true;
+
+  Future<void>? getLatestPosts;
+
   List<VideoStory> videoStories = [
     VideoStory(
       videoUrl:
@@ -72,161 +82,214 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    getLatestPosts = Provider.of<UserPostsProvider>(context, listen: false)
+        .fetchLatestPosts();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    super.build(context);
+    return RefreshIndicator(
+      color: Colors.white,
       backgroundColor: Colors.black,
-      body: ListView(
-        controller: widget.scrollController,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-            ),
-            height: 110,
-            width: double.infinity,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: 7,
-                    ),
-                    child: SizedBox(
-                      height: 115,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        alignment: Alignment.center,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
-                              CircleAvatar(
-                                radius: 36,
-                                backgroundColor: Colors.grey,
-                                backgroundImage: NetworkImage(
-                                  'https://c4.wallpaperflare.com/wallpaper/127/164/7/kid-luffy-monkey-d-luffy-one-piece-anime-hd-wallpaper-preview.jpg',
-                                ),
-                              ),
-                              SizedBoxConstants.sizedboxh5,
-                              Text(
-                                'Your story',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
+      onRefresh: () async {
+        await Provider.of<UserPostsProvider>(context, listen: false)
+            .fetchLatestPosts();
+      },
+      child: Scaffold(
+        body: ListView(
+          controller: widget.scrollController,
+          children: [
+            // dummy story datas
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
+              height: 120,
+              width: double.infinity,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 7,
                           ),
-                          const Positioned(
-                            bottom: 34,
-                            right: -2,
-                            child: CircleAvatar(
-                              radius: 12,
-                              backgroundColor: Colors.black,
-                              child: CircleAvatar(
-                                radius: 10,
-                                backgroundColor: Colors.blue,
-                                child: Center(
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                    size: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  ...videoStories
-                      .map((videoStory) => Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                            ),
-                            child: Container(
-                              width: 80,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Column(
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            alignment: Alignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              StoryPlayerScreen(
-                                            videoStory: videoStory,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      height: 71,
-                                      width: 71,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            Colors.amber,
-                                            Colors.red,
-                                          ],
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: CircleAvatar(
-                                          radius: 34,
-                                          backgroundColor: Colors.black,
-                                          child: CircleAvatar(
-                                            radius: 31,
-                                            backgroundImage: NetworkImage(
-                                              videoStory.avatarUrl,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                  const CircleAvatar(
+                                    radius: 34,
+                                    backgroundImage: NetworkImage(
+                                      'https://static.wikia.nocookie.net/naruto/images/d/d6/Naruto_Part_I.png/revision/latest/scale-to-width-down/1200?cb=20210223094656',
                                     ),
                                   ),
                                   SizedBoxConstants.sizedboxh5,
                                   Text(
-                                    videoStory.username,
+                                    'Your story',
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  // Container(
-                                  //   width: 100,
-                                  //   height: 180,
-                                  //   child: VideoStoryWidget(
-                                  //     videoStory: videoStories[index],
-                                  //   ),
-                                  // ),
                                 ],
                               ),
-                            ),
-                          ))
-                      .toList()
-                ],
+                              const Positioned(
+                                bottom: 20,
+                                right: -3,
+                                child: CircleAvatar(
+                                  radius: 12,
+                                  backgroundColor: Colors.black,
+                                  child: CircleAvatar(
+                                    radius: 10,
+                                    backgroundColor: Colors.blue,
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                        size: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        ...videoStories
+                            .map((videoStory) => Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 5,
+                                  ),
+                                  child: Container(
+                                    width: 80,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    StoryPlayerScreen(
+                                                  videoStory: videoStory,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            height: 71,
+                                            width: 71,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Colors.amber,
+                                                  Colors.red,
+                                                ],
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: CircleAvatar(
+                                                radius: 34,
+                                                backgroundColor: Colors.black,
+                                                child: CircleAvatar(
+                                                  radius: 31,
+                                                  backgroundImage: NetworkImage(
+                                                    videoStory.avatarUrl,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBoxConstants.sizedboxh5,
+                                        Text(
+                                          videoStory.username,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ))
+                            .toList()
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Container(
-            height: 400,
-            color: Colors.red,
-          ),
-          Container(
-            height: 400,
-            color: Colors.blue,
-          ),
-          Container(
-            height: 400,
-            color: Colors.black,
-          ),
-        ],
+            const Divider(
+              color: Colors.white,
+            ),
+
+            // latest posts
+            FutureBuilder(
+              future: getLatestPosts,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SizedBox();
+                } else if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('Something went wrong'),
+                  );
+                } else {
+                  return Consumer<UserPostsProvider>(
+                    builder: (context, postData, child) {
+                      if (postData.allUserPosts.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            'No posts till date',
+                          ),
+                        );
+                      } else {
+                        return Column(
+                          children: postData.latestUserPosts
+                              .map((userPost) => ChangeNotifierProvider.value(
+                                    value: userPost,
+                                    child: const UserPostWidget(),
+                                  ))
+                              .toList(),
+                        );
+                        // return ListView.builder(
+                        //   controller: widget.scrollController,
+                        //   shrinkWrap: true,
+                        //   itemCount: postData.allUserPosts.length,
+                        //   itemBuilder: (context, index) {
+                        //     return ChangeNotifierProvider.value(
+                        //       value: postData.allUserPosts[index],
+                        //       child: const UserPostWidget(),
+                        //     );
+                        //   },
+                        // );
+                      }
+                    },
+                  );
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
