@@ -294,7 +294,12 @@ class _SelectImagePageState extends State<SelectImagePage>
           .map((e) => DropdownMenuItem(
                 value: e,
                 child: Text(
-                  e.folder,
+                  e.folder.length > 8
+                      ? "${e.folder.substring(
+                          0,
+                          8,
+                        )}.."
+                      : e.folder,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,

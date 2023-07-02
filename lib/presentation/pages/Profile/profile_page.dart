@@ -60,7 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         const CustomPopUpMenuButton(),
                       ],
                     ),
-                    if (widget.chatUser.userId != UserApis.user!.uid)
+                    if (widget.chatUser.userId == UserApis.user!.uid)
                       Row(
                         children: [
                           IconButton(
@@ -80,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ],
                       ),
-                    if (widget.chatUser.userId == UserApis.user!.uid)
+                    if (widget.chatUser.userId != UserApis.user!.uid)
                       Row(
                         children: [
                           IconButton(
@@ -144,22 +144,40 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                     ),
                                   ),
-                                  Consumer<UserPostsProvider>(
-                                      builder: (context, postData, child) {
-                                    return ProfileDataWidget(
-                                        data: postData.userPosts.length,
-                                        label: 'Posts',
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const UserPostsPage(
-                                                postIndex: 0,
-                                              ),
-                                            ),
+                                  FutureBuilder(
+                                      future: Provider.of<UserPostsProvider>(
+                                              context,
+                                              listen: false)
+                                          .fetchAllPostsOfUser(
+                                              widget.chatUser.userId),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return ProfileDataWidget(
+                                            data: 0,
+                                            label: 'Posts',
+                                            onTap: () {},
                                           );
+                                        }
+                                        return Consumer<UserPostsProvider>(
+                                            builder:
+                                                (context, postData, child) {
+                                          return ProfileDataWidget(
+                                              data:
+                                                  postData.allUserPosts.length,
+                                              label: 'Posts',
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const UserPostsPage(
+                                                      postIndex: 0,
+                                                    ),
+                                                  ),
+                                                );
+                                              });
                                         });
-                                  }),
+                                      }),
                                   FutureBuilder(
                                     future: Provider.of<ProfileDataProvider>(
                                       context,

@@ -59,7 +59,7 @@ class _UserPostsPageState extends State<UserPostsPage> {
         ),
         body: Consumer<UserPostsProvider>(
           builder: (context, postData, child) {
-            if (postData.userPosts.isEmpty) {
+            if (postData.allUserPosts.isEmpty) {
               return const Center(
                 child: Text(
                   'No posts till date',
@@ -69,10 +69,10 @@ class _UserPostsPageState extends State<UserPostsPage> {
               return ScrollablePositionedList.builder(
                 itemScrollController: itemScrollController,
                 physics: const BouncingScrollPhysics(),
-                itemCount: postData.userPosts.length,
+                itemCount: postData.allUserPosts.length,
                 itemBuilder: (context, index) {
                   return ChangeNotifierProvider.value(
-                    value: postData.userPosts[index],
+                    value: postData.allUserPosts[index],
                     child: const UserPostWidget(),
                   );
                 },

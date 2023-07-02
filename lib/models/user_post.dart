@@ -1,5 +1,6 @@
 import 'package:dinstagram/apis/user_apis.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
 
 class UserPostModel with ChangeNotifier {
@@ -10,8 +11,10 @@ class UserPostModel with ChangeNotifier {
     required this.id,
     required this.longitude,
     required this.likes,
+    required this.bookmarks,
     required this.userId,
     this.isLiked = false,
+    this.isBookmarked = false,
   });
   late final List<Images> images;
   late final double latitude;
@@ -19,12 +22,52 @@ class UserPostModel with ChangeNotifier {
   late final String id;
   late final double longitude;
   late final List<Likes> likes;
+  late final List<Bookmarks> bookmarks;
   late final String userId;
   late bool isLiked;
+  late bool isBookmarked;
+
+  Future<void> toggleIsBookmarked() async {
+    if (!isBookmarked) {
+      isBookmarked = true;
+      notifyListeners();
+
+      bookmarks.add(Bookmarks(userId: UserApis.user!.uid));
+      await UserApis.firestore
+          .collection('posts/$userId/userposts/')
+          .doc(id)
+          .update({
+            'bookmarks': bookmarks.map((e) => e.toJson()).toList(),
+          })
+          .then((value) {})
+          .catchError((e) {
+            isBookmarked = false;
+            notifyListeners();
+          });
+    } else {
+      isBookmarked = false;
+      notifyListeners();
+      bookmarks.removeWhere((element) => element.userId == UserApis.user!.uid);
+      await UserApis.firestore
+          .collection('posts/$userId/userposts/')
+          .doc(id)
+          .update(
+            {
+              'bookmarks': bookmarks.map((e) => e.toJson()).toList(),
+            },
+          )
+          .then((value) {})
+          .catchError(
+            (e) {
+              isBookmarked = true;
+              notifyListeners();
+            },
+          );
+    }
+  }
 
   Future<void> toggleIsLiked() async {
     if (!isLiked) {
-      print('not liked');
       isLiked = true;
       notifyListeners();
 
@@ -41,7 +84,6 @@ class UserPostModel with ChangeNotifier {
             notifyListeners();
           });
     } else {
-      print('liked');
       isLiked = false;
       notifyListeners();
       likes.removeWhere((element) => element.userId == UserApis.user!.uid);
@@ -70,8 +112,13 @@ class UserPostModel with ChangeNotifier {
     id = json['id'];
     longitude = json['longitude'];
     likes = List.from(json['likes']).map((e) => Likes.fromJson(e)).toList();
+    bookmarks =
+        List.from(json['bookmarks']).map((e) => Bookmarks.fromJson(e)).toList();
     userId = json['userId'];
     isLiked = likes.firstWhereOrNull(
+            (element) => element.userId == UserApis.user!.uid) !=
+        null;
+    isBookmarked = bookmarks.firstWhereOrNull(
             (element) => element.userId == UserApis.user!.uid) !=
         null;
   }
@@ -84,6 +131,7 @@ class UserPostModel with ChangeNotifier {
     data['id'] = id;
     data['longitude'] = longitude;
     data['likes'] = likes.map((e) => e.toJson()).toList();
+    data['bookmarks'] = bookmarks.map((e) => e.toJson()).toList();
     data['userId'] = userId;
     return data;
   }
@@ -117,6 +165,23 @@ class Likes {
   late final String userId;
 
   Likes.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['userId'] = userId;
+    return data;
+  }
+}
+
+class Bookmarks {
+  Bookmarks({
+    required this.userId,
+  });
+  late final String userId;
+
+  Bookmarks.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
   }
 
