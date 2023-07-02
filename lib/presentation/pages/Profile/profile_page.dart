@@ -1,4 +1,7 @@
-import 'package:dinstagram/providers/followings_followers_provider.dart';
+import 'package:dinstagram/presentation/pages/Profile/widgets/profile_data_widget.dart';
+import 'package:dinstagram/presentation/pages/Profile/widgets/user_posts_grid_view.dart';
+import 'package:dinstagram/providers/profile_data_provider.dart';
+import 'package:dinstagram/providers/user_posts_provider.dart';
 import 'package:flutter/material.dart';
 // import 'package:collection/collection.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +13,7 @@ import '../../resources/constants/sizedbox_constants.dart';
 import '../Chat/chat_page.dart';
 import '../Chat/chats_page.dart';
 import '../Dashboard/widgets/custom_popup_menubutton.dart';
+import '../UserPosts/user_posts_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final ChatUser chatUser;
@@ -21,34 +25,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final List<Widget> pages = [
-    Container(
-      color: Colors.red,
-      child: const Center(
-        child: Text(
-          'Page 1',
-          style: TextStyle(fontSize: 24, color: Colors.white),
-        ),
-      ),
-    ),
-    Container(
-      color: Colors.blue,
-      child: const Center(
-        child: Text(
-          'Page 3',
-          style: TextStyle(fontSize: 24, color: Colors.white),
-        ),
-      ),
-    ),
-  ];
   late bool haveFollowed;
   List<String> list = [];
+
+  final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
         initialIndex: 0,
-        length: pages.length,
+        length: 2,
         child: Scaffold(
           body: Column(
             children: [
@@ -65,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Dinstagram',
+                          widget.chatUser.userName,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -74,25 +60,43 @@ class _ProfilePageState extends State<ProfilePage> {
                         const CustomPopUpMenuButton(),
                       ],
                     ),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.favorite_outline,
+                    if (widget.chatUser.userId != UserApis.user!.uid)
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.favorite_outline,
+                            ),
                           ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(ChatsPage.routename);
-                          },
-                          icon: const Icon(
-                            Icons.message_outlined,
+                          IconButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(ChatsPage.routename);
+                            },
+                            icon: const Icon(
+                              Icons.message_outlined,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    if (widget.chatUser.userId == UserApis.user!.uid)
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.add_box_outlined,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.menu,
+                            ),
+                          ),
+                        ],
+                      ),
                   ],
                 ),
               ),
@@ -130,74 +134,96 @@ class _ProfilePageState extends State<ProfilePage> {
                                 children: [
                                   Expanded(
                                     flex: 3,
-                                    child: CircleAvatar(
-                                      radius: 40,
-                                      backgroundColor: Colors.grey,
-                                      backgroundImage:
-                                          NetworkImage(users[0].profileImage),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: CircleAvatar(
+                                        radius: 40,
+                                        backgroundColor: Colors.grey,
+                                        backgroundImage:
+                                            NetworkImage(users[0].profileImage),
+                                      ),
                                     ),
                                   ),
-                                  const ProfileDataWidget(
-                                    data: 0,
-                                    label: 'Posts',
-                                  ),
+                                  Consumer<UserPostsProvider>(
+                                      builder: (context, postData, child) {
+                                    return ProfileDataWidget(
+                                        data: postData.userPosts.length,
+                                        label: 'Posts',
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const UserPostsPage(
+                                                postIndex: 0,
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  }),
                                   FutureBuilder(
-                                    future:
-                                        Provider.of<FollowingFollowersProvider>(
+                                    future: Provider.of<ProfileDataProvider>(
                                       context,
                                       listen: false,
                                     ).getFollowers(widget.chatUser.userId),
                                     builder: (context, snapshot) {
                                       if (snapshot.connectionState ==
                                           ConnectionState.waiting) {
-                                        return const ProfileDataWidget(
+                                        return ProfileDataWidget(
                                           data: 0,
                                           label: 'Followers',
+                                          onTap: () {},
                                         );
                                       }
 
-                                      return Consumer<
-                                              FollowingFollowersProvider>(
+                                      return Consumer<ProfileDataProvider>(
                                           builder: (context, ffpData, child) {
                                         return ProfileDataWidget(
                                           data: ffpData.followers,
                                           label: 'Followers',
+                                          onTap: () {},
                                         );
                                       });
                                     },
                                   ),
                                   FutureBuilder(
-                                    future:
-                                        Provider.of<FollowingFollowersProvider>(
+                                    future: Provider.of<ProfileDataProvider>(
                                       context,
                                       listen: false,
                                     ).getFollowings(widget.chatUser.userId),
                                     builder: (context, snapshot) {
                                       if (snapshot.connectionState ==
                                           ConnectionState.waiting) {
-                                        return const ProfileDataWidget(
+                                        return ProfileDataWidget(
                                           data: 0,
                                           label: 'Followings',
+                                          onTap: () {},
                                         );
                                       }
 
-                                      return Consumer<
-                                              FollowingFollowersProvider>(
+                                      return Consumer<ProfileDataProvider>(
                                           builder: (context, ffpData, child) {
                                         return ProfileDataWidget(
                                           data: ffpData.followings,
                                           label: 'Followings',
+                                          onTap: () {},
                                         );
                                       });
                                     },
                                   ),
                                 ],
                               ),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               Text(
-                                users[0].email,
+                                users[0].userName,
                               ),
                               const Text(
                                 'Oh, well whatever happens happens.',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white60,
+                                ),
                               ),
                               SizedBoxConstants.sizedboxh20,
                               if (widget.chatUser.userId == UserApis.user!.uid)
@@ -250,12 +276,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                             onTap: () {
                                               if (!haveFollowed) {
                                                 Provider.of<
-                                                    FollowingFollowersProvider>(
+                                                    ProfileDataProvider>(
                                                   context,
                                                   listen: false,
                                                 ).follow(widget.chatUser);
                                               } else {
-                                                Provider.of<FollowingFollowersProvider>(
+                                                Provider.of<ProfileDataProvider>(
                                                         context,
                                                         listen: false)
                                                     .unfollow(widget.chatUser);
@@ -355,7 +381,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                     Expanded(
                                       child: TabBarView(
-                                        children: pages,
+                                        children: [
+                                          UserPostsGridView(
+                                            chatUser: widget.chatUser,
+                                            scrollController: _scrollController,
+                                          ),
+                                          const Center(
+                                            child: Text(
+                                              'No reels till date',
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -371,29 +407,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class ProfileDataWidget extends StatelessWidget {
-  final int data;
-  final String label;
-  const ProfileDataWidget({
-    super.key,
-    required this.data,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      flex: 2,
-      child: Column(
-        children: [
-          Text(data.toString()),
-          Text(label),
-        ],
       ),
     );
   }

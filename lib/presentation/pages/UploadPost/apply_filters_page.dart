@@ -38,13 +38,11 @@ class _ApplyFilterPageState extends State<ApplyFilterPage> {
   late List<ColorFilterModel> colorFilters;
   late List<ImageFilterFile> imageFilterFiles;
 
-  void toggleColorFilter(ColorFilter colorFilter) {
-    // setState(() {
-    //   selectedColorFilter.colorFilter = colorFilter;
-    // });
+  void toggleColorFilter(ColorFilterModel colorFilter) {
     for (var imageFilterFile in imageFilterFiles) {
       setState(() {
-        imageFilterFile.colorFilterModel.colorFilter = colorFilter;
+        imageFilterFile.colorFilterModel.colorFilter = colorFilter.colorFilter;
+        imageFilterFile.colorFilterModel.filterName = colorFilter.filterName;
       });
     }
   }
@@ -292,7 +290,7 @@ class _ApplyFilterPageState extends State<ApplyFilterPage> {
 
                                 // toggle the color filter being applied
                                 toggleColorFilter(
-                                  colorFilters[index].colorFilter,
+                                  colorFilters[index],
                                 );
                               },
                               child: Container(

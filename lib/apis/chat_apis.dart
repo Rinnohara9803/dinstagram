@@ -186,6 +186,15 @@ class ChatApis {
         .snapshots();
   }
 
+  // user info with userId
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getUserInfoWithUserId(
+      String userId) {
+    return firestore
+        .collection('users')
+        .where('userId', isEqualTo: userId)
+        .snapshots();
+  }
+
   // profile info snapshot
   static Stream<QuerySnapshot<Map<String, dynamic>>> getProfileInfo() {
     return firestore

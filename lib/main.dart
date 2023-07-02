@@ -1,13 +1,13 @@
 import 'package:dinstagram/presentation/pages/Dashboard/dashboard_page.dart';
 import 'package:dinstagram/presentation/pages/Dashboard/initial_page.dart';
-import 'package:dinstagram/presentation/pages/Register/email_confirmation_page.dart';
 import 'package:dinstagram/presentation/pages/Register/register_with_email_page.dart';
 import 'package:dinstagram/presentation/pages/Register/register_with_phone_page_one.dart';
 import 'package:dinstagram/presentation/pages/Splash/splash_page.dart';
 import 'package:dinstagram/presentation/pages/UploadPost/select_image_page.dart';
 import 'package:dinstagram/presentation/pages/Verify-Email/verify_email_page.dart';
-import 'package:dinstagram/providers/followings_followers_provider.dart';
+import 'package:dinstagram/providers/profile_data_provider.dart';
 import 'package:dinstagram/providers/profile_provider.dart';
+import 'package:dinstagram/providers/user_posts_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,8 +52,13 @@ class MyApp extends StatelessWidget {
         ),
 
         // followings-followers provider
-        ChangeNotifierProvider<FollowingFollowersProvider>(
-          create: (context) => FollowingFollowersProvider(),
+        ChangeNotifierProvider<ProfileDataProvider>(
+          create: (context) => ProfileDataProvider(),
+        ),
+
+        // user posts provider
+        ChangeNotifierProvider<UserPostsProvider>(
+          create: (context) => UserPostsProvider(),
         ),
       ],
       child: MaterialApp(
@@ -65,8 +70,6 @@ class MyApp extends StatelessWidget {
           LoginPage.routename: (context) => const LoginPage(),
           RegisterWithEmailPageOne.routename: (context) =>
               const RegisterWithEmailPageOne(),
-          EmailConfirmationPage.routename: (context) =>
-              const EmailConfirmationPage(),
           RegisterWithPhonePageOne.routename: (context) =>
               const RegisterWithPhonePageOne(),
           VerifyEmailPage.routename: (context) => const VerifyEmailPage(),
