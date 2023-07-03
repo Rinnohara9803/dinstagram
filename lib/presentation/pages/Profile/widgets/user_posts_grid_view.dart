@@ -156,29 +156,27 @@ class UserPostGridViewWidgetState extends State<UserPostGridViewWidget> {
         },
         child: Stack(
           children: [
-            ColorFiltered(
-              colorFilter: ColorFilters.colorFilterModels
-                  .firstWhere((element) =>
-                      element.filterName == post.images[0].filterName)
-                  .colorFilter,
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
+            CachedNetworkImage(
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: constraints.maxHeight,
+              imageUrl: post.images[0].imageUrl,
+              // colorBlendMode: ColorFilters.colorFilterModels
+              //   .firstWhere((element) =>
+              //       element.filterName == post.images[0].filterName)
+              //   .colorFilter,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              ),
+              errorWidget: (context, url, error) => SizedBox(
                 width: double.infinity,
                 height: constraints.maxHeight,
-                imageUrl: post.images[0].imageUrl,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
-                ),
-                errorWidget: (context, url, error) => SizedBox(
-                  width: double.infinity,
-                  height: constraints.maxHeight,
-                  child: const Center(
-                    child: Icon(
-                      Icons.error,
-                    ),
+                child: const Center(
+                  child: Icon(
+                    Icons.error,
                   ),
                 ),
               ),

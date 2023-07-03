@@ -9,6 +9,10 @@ class UserApis {
 
   static final user = auth.currentUser;
 
+  static Stream<DocumentSnapshot<Map<String, dynamic>>> getUser(String userId) {
+    return firestore.collection('users').doc(userId).snapshots();
+  }
+
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllFollowings(
       String userId) {
     return firestore

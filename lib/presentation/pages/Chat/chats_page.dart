@@ -1,6 +1,6 @@
 import 'package:dinstagram/apis/chat_apis.dart';
+import 'package:dinstagram/apis/user_apis.dart';
 import 'package:flutter/material.dart';
-
 import '../../../models/chat_user.dart';
 import 'widgets/chat_user_card.dart';
 
@@ -13,6 +13,7 @@ class ChatsPage extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<ChatsPage> {
+  List<String> userIds = [];
   List<ChatUser> users = [];
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _ChatsPageState extends State<ChatsPage> {
           ),
         ),
         body: StreamBuilder(
-          stream: ChatApis.getAllUsers(),
+          stream: UserApis.getAllFollowings(UserApis.user!.uid),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -44,24 +45,40 @@ class _ChatsPageState extends State<ChatsPage> {
               case ConnectionState.active:
               case ConnectionState.done:
                 if (snapshot.hasData) {
-                  users = [];
+                  userIds = [];
                   for (var i in snapshot.data!.docs) {
-                    users.add(ChatUser.fromJson(i.data()));
+                    userIds.add(i.data()['userId']);
                   }
                 }
-                if (users.isEmpty) {
+                if (userIds.isEmpty) {
                   return const Center(
-                    child: Text('No users found.'),
+                    child: Text(
+                      'You have no followings',
+                    ),
+                  );
+                } else {
+                  return ListView.builder(
+                    itemCount: userIds.length,
+                    itemBuilder: (context, index) {
+                      return StreamBuilder(
+                          stream: UserApis.getUser(userIds[index]),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              users = [];
+                              users.add(ChatUser.fromJson(snapshot.data!.data()
+                                  as Map<String, dynamic>));
+                            }
+                            if (users.isEmpty) {
+                              return const SizedBox();
+                            } else {
+                              return ChatUserCard(
+                                chatUser: users[0],
+                              );
+                            }
+                          });
+                    },
                   );
                 }
-                return ListView.builder(
-                  itemCount: users.length,
-                  itemBuilder: (context, index) {
-                    return ChatUserCard(
-                      chatUser: users[index],
-                    );
-                  },
-                );
             }
           },
         ),

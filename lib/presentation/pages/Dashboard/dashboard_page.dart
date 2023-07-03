@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../Home/home_page.dart';
+import '../Search/search_page.dart';
 import '../UploadPost/select_image_page.dart';
 import 'widgets/custom_popup_menubutton.dart';
 
@@ -23,6 +24,13 @@ class _DashboardPageState extends State<DashboardPage> {
   );
 
   int _selectedIndex = 0;
+
+  void _returnToHomePage() {
+    setState(() {
+      _selectedIndex = 0;
+      _pageController.jumpToPage(_selectedIndex);
+    });
+  }
 
   void _onItemTapped(int index) async {
     if (index == 2) {
@@ -84,6 +92,9 @@ class _DashboardPageState extends State<DashboardPage> {
                     Icons.message_outlined,
                   ),
                 ),
+                const SizedBox(
+                  width: 10,
+                ),
               ],
             ),
           ],
@@ -143,11 +154,14 @@ class _DashboardPageState extends State<DashboardPage> {
                   HomePage(
                     scrollController: _scrollController,
                   ),
-                  const Page2(),
+                  SearchPage(
+                    returnToHomePage: _returnToHomePage,
+                  ),
                   const Page3(),
                   const Page4(),
                   ProfilePage(
                     chatUser: Provider.of<ProfileProvider>(context).chatUser,
+                    navigateBack: _returnToHomePage,
                   ),
                 ],
               ),
@@ -219,32 +233,6 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class Page2 extends StatefulWidget {
-  const Page2({super.key});
-
-  @override
-  State<Page2> createState() => _Page2State();
-}
-
-class _Page2State extends State<Page2> {
-  final _pageController = PageController();
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: PageView(
-          controller: _pageController,
-          children: [
-            Container(
-              color: Colors.blue,
-            ),
-          ],
         ),
       ),
     );
