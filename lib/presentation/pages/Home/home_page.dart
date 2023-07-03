@@ -250,16 +250,24 @@ class _HomePageState extends State<HomePage>
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const SizedBox();
                 } else if (snapshot.hasError) {
-                  return const Center(
-                    child: Text('Something went wrong'),
+                  return const SizedBox(
+                    height: 100,
+                    child: Center(
+                      child: Text(
+                        'Something went wrong.',
+                      ),
+                    ),
                   );
                 } else {
                   return Consumer<UserPostsProvider>(
                     builder: (context, postData, child) {
-                      if (postData.allUserPosts.isEmpty) {
-                        return const Center(
-                          child: Text(
-                            'No posts till date',
+                      if (postData.latestUserPosts.isEmpty) {
+                        return const SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: Text(
+                              'No posts to view.',
+                            ),
                           ),
                         );
                       } else {

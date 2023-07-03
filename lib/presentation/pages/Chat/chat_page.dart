@@ -394,7 +394,12 @@ class _ChatPageState extends State<ChatPage> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ProfilePage(chatUser: widget.user),
+                      builder: (context) => ProfilePage(
+                        chatUser: widget.user,
+                        navigateBack: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
                     ),
                   );
                 },

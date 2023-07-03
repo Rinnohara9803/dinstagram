@@ -28,6 +28,8 @@ class ChatApis {
         .snapshots();
   }
 
+  // followings snapshot
+
   // get a unique conversation id between two chat-users
   static String getConversationId(String id) =>
       user!.uid.hashCode <= id.hashCode

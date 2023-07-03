@@ -16,6 +16,14 @@ class ProfileDataProvider with ChangeNotifier {
   int get followings => _followings;
   int get followers => _followers;
 
+  List<String> get followersList {
+    return [..._followersList];
+  }
+
+  List<String> get followingsList {
+    return [..._followingsList];
+  }
+
   Future<void> getFollowers(String userId) async {
     await FirebaseFirestore.instance
         .collection('followers/$userId/userFollowers/')
