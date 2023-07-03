@@ -157,7 +157,6 @@ class _ChatUserCardState extends State<ChatUserCard> {
             ),
             trailing: const Icon(
               Icons.camera_alt_outlined,
-              color: Colors.white,
             ),
           );
         },

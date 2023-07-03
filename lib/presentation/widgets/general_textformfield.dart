@@ -31,6 +31,9 @@ class _GeneralTextFormFieldState extends State<GeneralTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: const TextStyle(
+        color: Colors.white,
+      ),
       cursorColor: Colors.white,
       autofocus: widget.autoFocus,
       obscureText: widget.hasSuffixIcon ? isVisible : false,
@@ -38,17 +41,6 @@ class _GeneralTextFormFieldState extends State<GeneralTextFormField> {
       validator: widget.validator,
       controller: widget.controller,
       decoration: InputDecoration(
-        fillColor: const Color.fromARGB(255, 33, 38, 63),
-        filled: true,
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            width: 1.5,
-            color: Colors.grey,
-          ),
-          borderRadius: BorderRadius.circular(
-            10,
-          ),
-        ),
         label: Text(
           widget.label,
           style: const TextStyle(
@@ -58,7 +50,6 @@ class _GeneralTextFormFieldState extends State<GeneralTextFormField> {
         prefixIcon: widget.hasPrefixIcon
             ? Icon(
                 widget.iconData,
-                color: Colors.grey,
               )
             : null,
         suffixIcon: widget.hasSuffixIcon
@@ -69,13 +60,11 @@ class _GeneralTextFormFieldState extends State<GeneralTextFormField> {
                   });
                 },
                 icon: isVisible
-                    ? Icon(
+                    ? const Icon(
                         Icons.visibility,
-                        color: ColorsManager.grey,
                       )
-                    : Icon(
+                    : const Icon(
                         Icons.visibility_off,
-                        color: ColorsManager.grey,
                       ),
               )
             : null,

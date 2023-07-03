@@ -1,10 +1,12 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dinstagram/presentation/resources/themes_manager.dart';
 import 'package:dinstagram/utilities/my_date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../apis/chat_apis.dart';
 import '../../../../models/chat_message.dart';
@@ -181,8 +183,10 @@ class _MessageCardState extends State<MessageCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const VerticalDivider(
-                      color: Colors.white,
+                    VerticalDivider(
+                      color: Provider.of<ThemeProvider>(context).isLightTheme
+                          ? Colors.black
+                          : Colors.white,
                       thickness: 2,
                     ),
                     Flexible(
@@ -192,7 +196,10 @@ class _MessageCardState extends State<MessageCard> {
                           horizontal: 20,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 39, 38, 38),
+                          color:
+                              Provider.of<ThemeProvider>(context).isLightTheme
+                                  ? Colors.black26
+                                  : const Color.fromARGB(255, 39, 38, 38),
                           borderRadius: BorderRadius.circular(
                             15,
                           ),
@@ -230,23 +237,49 @@ class _MessageCardState extends State<MessageCard> {
                   openWithTap: false,
                   menuItems: [
                     FocusedMenuItem(
-                      trailingIcon: const Icon(
+                      trailingIcon: Icon(
                         Icons.reply,
-                        color: Colors.white,
+                        color: Provider.of<ThemeProvider>(context).isLightTheme
+                            ? Colors.black
+                            : Colors.white,
                       ),
-                      backgroundColor: const Color.fromARGB(255, 51, 48, 48),
-                      title: const Text('Reply'),
+                      backgroundColor:
+                          Provider.of<ThemeProvider>(context).isLightTheme
+                              ? Colors.black12
+                              : const Color.fromARGB(255, 51, 48, 48),
+                      title: Text(
+                        'Reply',
+                        style: TextStyle(
+                          color:
+                              Provider.of<ThemeProvider>(context).isLightTheme
+                                  ? Colors.black
+                                  : Colors.white,
+                        ),
+                      ),
                       onPressed: () {
                         widget.setReplyText(widget.chatMessage.message);
                       },
                     ),
                     FocusedMenuItem(
-                      trailingIcon: const Icon(
+                      trailingIcon: Icon(
                         Icons.copy,
-                        color: Colors.white,
+                        color: Provider.of<ThemeProvider>(context).isLightTheme
+                            ? Colors.black
+                            : Colors.white,
                       ),
-                      backgroundColor: const Color.fromARGB(255, 51, 48, 48),
-                      title: const Text('Copy'),
+                      backgroundColor:
+                          Provider.of<ThemeProvider>(context).isLightTheme
+                              ? Colors.black12
+                              : const Color.fromARGB(255, 51, 48, 48),
+                      title: Text(
+                        'Copy',
+                        style: TextStyle(
+                          color:
+                              Provider.of<ThemeProvider>(context).isLightTheme
+                                  ? Colors.black
+                                  : Colors.white,
+                        ),
+                      ),
                       onPressed: () {
                         Clipboard.setData(
                           ClipboardData(
@@ -264,7 +297,9 @@ class _MessageCardState extends State<MessageCard> {
                       border: Border.all(
                         color: Colors.grey,
                       ),
-                      color: const Color.fromARGB(255, 41, 38, 38),
+                      color: Provider.of<ThemeProvider>(context).isLightTheme
+                          ? Colors.black12
+                          : Colors.black,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(
                           30,
@@ -337,7 +372,10 @@ class _MessageCardState extends State<MessageCard> {
                           horizontal: 20,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 39, 38, 38),
+                          color:
+                              Provider.of<ThemeProvider>(context).isLightTheme
+                                  ? Colors.black26
+                                  : const Color.fromARGB(255, 39, 38, 38),
                           borderRadius: BorderRadius.circular(
                             15,
                           ),
@@ -347,8 +385,10 @@ class _MessageCardState extends State<MessageCard> {
                         ),
                       ),
                     ),
-                    const VerticalDivider(
-                      color: Colors.white,
+                    VerticalDivider(
+                      color: Provider.of<ThemeProvider>(context).isLightTheme
+                          ? Colors.black
+                          : Colors.white,
                       thickness: 2,
                     )
                   ],
@@ -369,10 +409,12 @@ class _MessageCardState extends State<MessageCard> {
               Row(
                 children: [
                   if (widget.chatMessage.read.isNotEmpty)
-                    const Icon(
+                    Icon(
                       Icons.done_all,
                       size: 20,
-                      color: Colors.blue,
+                      color: Provider.of<ThemeProvider>(context).isLightTheme
+                          ? Colors.lightBlue
+                          : Colors.blue,
                     ),
                   if (widget.chatMessage.read.isNotEmpty)
                     SizedBoxConstants.sizedboxw5,
@@ -404,23 +446,49 @@ class _MessageCardState extends State<MessageCard> {
                   openWithTap: false,
                   menuItems: [
                     FocusedMenuItem(
-                      trailingIcon: const Icon(
+                      trailingIcon: Icon(
                         Icons.reply,
-                        color: Colors.white,
+                        color: Provider.of<ThemeProvider>(context).isLightTheme
+                            ? Colors.black
+                            : Colors.white,
                       ),
-                      backgroundColor: const Color.fromARGB(255, 51, 48, 48),
-                      title: const Text('Reply'),
+                      backgroundColor:
+                          Provider.of<ThemeProvider>(context).isLightTheme
+                              ? Colors.black12
+                              : const Color.fromARGB(255, 51, 48, 48),
+                      title: Text(
+                        'Reply',
+                        style: TextStyle(
+                          color:
+                              Provider.of<ThemeProvider>(context).isLightTheme
+                                  ? Colors.black
+                                  : Colors.white,
+                        ),
+                      ),
                       onPressed: () {
                         widget.setReplyText(widget.chatMessage.message);
                       },
                     ),
                     FocusedMenuItem(
-                      trailingIcon: const Icon(
+                      trailingIcon: Icon(
                         Icons.copy,
-                        color: Colors.white,
+                        color: Provider.of<ThemeProvider>(context).isLightTheme
+                            ? Colors.black
+                            : Colors.white,
                       ),
-                      backgroundColor: const Color.fromARGB(255, 51, 48, 48),
-                      title: const Text('Copy'),
+                      backgroundColor:
+                          Provider.of<ThemeProvider>(context).isLightTheme
+                              ? Colors.black12
+                              : const Color.fromARGB(255, 51, 48, 48),
+                      title: Text(
+                        'Copy',
+                        style: TextStyle(
+                          color:
+                              Provider.of<ThemeProvider>(context).isLightTheme
+                                  ? Colors.black
+                                  : Colors.white,
+                        ),
+                      ),
                       onPressed: () {
                         Clipboard.setData(
                           ClipboardData(
@@ -434,8 +502,19 @@ class _MessageCardState extends State<MessageCard> {
                         Icons.delete_outline_outlined,
                         color: Colors.red,
                       ),
-                      backgroundColor: const Color.fromARGB(255, 51, 48, 48),
-                      title: const Text('Unsend'),
+                      backgroundColor:
+                          Provider.of<ThemeProvider>(context).isLightTheme
+                              ? Colors.black12
+                              : const Color.fromARGB(255, 51, 48, 48),
+                      title: Text(
+                        'Unsend',
+                        style: TextStyle(
+                          color:
+                              Provider.of<ThemeProvider>(context).isLightTheme
+                                  ? Colors.black
+                                  : Colors.white,
+                        ),
+                      ),
                       onPressed: () async {
                         await ChatApis.deleteChatMessage(widget.chatMessage);
                       },

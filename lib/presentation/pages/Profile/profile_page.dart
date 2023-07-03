@@ -1,5 +1,6 @@
 import 'package:dinstagram/presentation/pages/Profile/widgets/profile_data_widget.dart';
 import 'package:dinstagram/presentation/pages/Profile/widgets/user_posts_grid_view.dart';
+import 'package:dinstagram/presentation/resources/themes_manager.dart';
 import 'package:dinstagram/providers/profile_data_provider.dart';
 import 'package:dinstagram/providers/user_posts_provider.dart';
 import 'package:flutter/material.dart';
@@ -74,27 +75,24 @@ class _ProfilePageState extends State<ProfilePage>
                           const CustomPopUpMenuButton(),
                         ],
                       ),
-                      if (widget.chatUser.userId == UserApis.user!.uid)
+                      if (widget.chatUser.userId != UserApis.user!.uid)
                         Row(
                           children: [
                             IconButton(
                               onPressed: () {},
                               icon: const Icon(
-                                Icons.favorite_outline,
+                                Icons.notification_add,
                               ),
                             ),
                             IconButton(
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamed(ChatsPage.routename);
-                              },
+                              onPressed: () {},
                               icon: const Icon(
-                                Icons.message_outlined,
+                                Icons.more_vert,
                               ),
                             ),
                           ],
                         ),
-                      if (widget.chatUser.userId != UserApis.user!.uid)
+                      if (widget.chatUser.userId == UserApis.user!.uid)
                         Row(
                           children: [
                             IconButton(
@@ -250,11 +248,13 @@ class _ProfilePageState extends State<ProfilePage>
                                 Text(
                                   users[0].userName,
                                 ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 const Text(
                                   'Oh, well whatever happens happens.',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.white60,
                                   ),
                                 ),
                                 SizedBoxConstants.sizedboxh20,
@@ -267,10 +267,18 @@ class _ProfilePageState extends State<ProfilePage>
                                           height: 40,
                                           decoration: BoxDecoration(
                                             border: Border.all(
-                                              color: Colors.white,
+                                              color: Provider.of<ThemeProvider>(
+                                                          context)
+                                                      .isLightTheme
+                                                  ? Colors.black
+                                                  : Colors.white,
                                             ),
-                                            color: const Color.fromARGB(
-                                                255, 38, 38, 39),
+                                            color: Provider.of<ThemeProvider>(
+                                                        context)
+                                                    .isLightTheme
+                                                ? Colors.white
+                                                : const Color.fromARGB(
+                                                    255, 38, 38, 39),
                                             borderRadius: BorderRadius.circular(
                                               10,
                                             ),
@@ -325,7 +333,12 @@ class _ProfilePageState extends State<ProfilePage>
                                               child: Container(
                                                 height: 40,
                                                 decoration: BoxDecoration(
-                                                  color: Colors.blue,
+                                                  color:
+                                                      Provider.of<ThemeProvider>(
+                                                                  context)
+                                                              .isLightTheme
+                                                          ? Colors.black26
+                                                          : Colors.blue,
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                     10,
@@ -365,9 +378,25 @@ class _ProfilePageState extends State<ProfilePage>
                                                     child: Container(
                                                       height: 40,
                                                       decoration: BoxDecoration(
-                                                        color: const Color
-                                                                .fromARGB(
-                                                            255, 48, 47, 47),
+                                                        border: Border.all(
+                                                          color: Provider.of<
+                                                                          ThemeProvider>(
+                                                                      context)
+                                                                  .isLightTheme
+                                                              ? Colors.black
+                                                              : Colors.white,
+                                                        ),
+                                                        color: Provider.of<
+                                                                        ThemeProvider>(
+                                                                    context)
+                                                                .isLightTheme
+                                                            ? Colors.white
+                                                            : const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                48,
+                                                                47,
+                                                                47),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(
@@ -391,14 +420,11 @@ class _ProfilePageState extends State<ProfilePage>
                                   child: Column(
                                     children: [
                                       const TabBar(
-                                        indicatorColor: Colors.white,
                                         indicatorSize: TabBarIndicatorSize.tab,
                                         indicatorWeight: 2,
                                         labelStyle: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
-                                        labelColor: Colors.white,
-                                        unselectedLabelColor: Colors.grey,
                                         tabs: [
                                           Tab(
                                             icon: Icon(

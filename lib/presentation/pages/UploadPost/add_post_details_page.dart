@@ -5,6 +5,7 @@ import 'package:dinstagram/models/user_post.dart';
 import 'package:dinstagram/presentation/pages/Dashboard/initial_page.dart';
 import 'package:dinstagram/presentation/pages/UploadPost/add_location_page.dart';
 import 'package:dinstagram/presentation/resources/constants/sizedbox_constants.dart';
+import 'package:dinstagram/presentation/resources/themes_manager.dart';
 import 'package:dinstagram/utilities/snackbars.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -146,13 +147,17 @@ class _AddPostDetailsPageState extends State<AddPostDetailsPage> {
                         child: TextField(
                           controller: _captionController,
                           cursorColor: Colors.blue,
-                          style: const TextStyle(
-                            color: Colors.grey,
+                          style: TextStyle(
                             fontSize: 14,
                           ),
                           minLines: 3,
                           maxLines: 5,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
+                            fillColor:
+                                Provider.of<ThemeProvider>(context).isLightTheme
+                                    ? Colors.transparent
+                                    : null,
+                            filled: true,
                             hintText: 'Write a caption...',
                             hintStyle: TextStyle(
                               color: Colors.grey,
@@ -225,7 +230,10 @@ class _AddPostDetailsPageState extends State<AddPostDetailsPage> {
                           horizontal: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 63, 62, 62),
+                          color:
+                              Provider.of<ThemeProvider>(context).isLightTheme
+                                  ? Colors.black12
+                                  : const Color.fromARGB(255, 63, 62, 62),
                           borderRadius: BorderRadius.circular(
                             5,
                           ),
@@ -296,7 +304,6 @@ class _AddPostDetailsPageState extends State<AddPostDetailsPage> {
           },
           icon: const Icon(
             Icons.arrow_forward_outlined,
-            color: Colors.white,
           ),
         ),
       ],

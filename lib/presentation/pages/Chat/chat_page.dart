@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dinstagram/models/chat_message.dart';
 import 'package:dinstagram/models/chat_user.dart';
+import 'package:dinstagram/presentation/resources/themes_manager.dart';
 import 'package:dinstagram/services/sound_recorder.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -126,7 +127,6 @@ class _ChatPageState extends State<ChatPage> {
                 Column(
                   children: [
                     const Divider(
-                      color: Colors.white,
                       thickness: 1,
                     ),
                     Padding(
@@ -235,7 +235,9 @@ class _ChatPageState extends State<ChatPage> {
         vertical: 8,
       ),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 37, 32, 32),
+        color: Provider.of<ThemeProvider>(context).isLightTheme
+            ? Colors.black12
+            : const Color.fromARGB(255, 37, 32, 32),
         borderRadius: BorderRadius.circular(
           33,
         ),
@@ -284,7 +286,6 @@ class _ChatPageState extends State<ChatPage> {
               minLines: 1,
               maxLines: 5,
               style: const TextStyle(
-                color: Colors.white,
                 fontSize: 15,
               ),
               decoration: const InputDecoration(
@@ -511,7 +512,7 @@ class _ChatPageState extends State<ChatPage> {
                         Icons.videocam,
                         color: message != null && message!.isVideoCallOn
                             ? Colors.blue
-                            : Colors.white,
+                            : null,
                       ),
                     );
                   }),

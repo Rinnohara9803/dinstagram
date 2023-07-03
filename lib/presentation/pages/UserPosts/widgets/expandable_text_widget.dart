@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../resources/themes_manager.dart';
 
 class ExpandableTextWidget extends StatefulWidget {
   final String username;
@@ -26,12 +29,20 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
           children: [
             TextSpan(
               text: widget.username, // Count value
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
+                color: Provider.of<ThemeProvider>(context).isLightTheme
+                    ? Colors.black
+                    : Colors.white,
               ),
             ),
             TextSpan(
               text: caption, // Word "likes"
+              style: TextStyle(
+                color: Provider.of<ThemeProvider>(context).isLightTheme
+                    ? Colors.black
+                    : Colors.white,
+              ),
             ),
           ],
         );
@@ -56,11 +67,21 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
                       children: [
                         TextSpan(
                           text: widget.username, // Count value
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
+                            color:
+                                Provider.of<ThemeProvider>(context).isLightTheme
+                                    ? Colors.black
+                                    : Colors.white,
                           ),
                         ),
                         TextSpan(
+                          style: TextStyle(
+                            color:
+                                Provider.of<ThemeProvider>(context).isLightTheme
+                                    ? Colors.black
+                                    : Colors.white,
+                          ),
                           text: caption.substring(
                             0,
                             isTextOverflowed

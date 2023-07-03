@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../../apis/chat_apis.dart';
 import '../../../../models/chat_user.dart';
 import '../../../../models/user_post.dart';
+import '../../../resources/themes_manager.dart';
 import 'animated_favorite_widget.dart';
 import 'expandable_text_widget.dart';
 
@@ -262,7 +263,10 @@ class _UserPostWidgetState extends State<UserPostWidget>
                             horizontal: 10,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.black87,
+                            color:
+                                Provider.of<ThemeProvider>(context).isLightTheme
+                                    ? Colors.white
+                                    : Colors.black87,
                             borderRadius: BorderRadius.circular(
                               15,
                             ),
@@ -304,7 +308,7 @@ class _UserPostWidgetState extends State<UserPostWidget>
                               post.isLiked
                                   ? Icons.favorite
                                   : Icons.favorite_border,
-                              color: post.isLiked ? Colors.red : Colors.white,
+                              color: post.isLiked ? Colors.red : null,
                             ),
                           );
                         },
@@ -378,7 +382,7 @@ class _UserPostWidgetState extends State<UserPostWidget>
                 context: context,
                 time: post.id,
               ),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12,
               ),

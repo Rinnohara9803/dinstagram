@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dinstagram/presentation/pages/Login/login_page.dart';
 import 'package:dinstagram/presentation/resources/assets_manager.dart';
+import 'package:dinstagram/presentation/resources/themes_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -70,14 +71,19 @@ class _SplashPageState extends State<SplashPage> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Colors.black87,
-              Colors.black,
-            ],
+            colors: Provider.of<ThemeProvider>(context).isLightTheme
+                ? [
+                    Colors.white70,
+                    Colors.white,
+                  ]
+                : [
+                    Colors.black87,
+                    Colors.black,
+                  ],
           )),
           child: Center(
             child: Column(
