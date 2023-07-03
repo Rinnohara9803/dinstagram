@@ -201,31 +201,23 @@ class _SelectImagePageState extends State<SelectImagePage>
                           ? TextButton.icon(
                               label: const Text(
                                 'Select an image',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
                               ),
                               onPressed: () {
                                 toggleSelectMultipleImages();
                               },
                               icon: const Icon(
                                 Icons.image,
-                                color: Colors.white,
                               ),
                             )
                           : TextButton.icon(
                               label: const Text(
                                 'Select multiple images',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
                               ),
                               onPressed: () {
                                 toggleSelectMultipleImages();
                               },
                               icon: const Icon(
                                 Icons.grid_on_sharp,
-                                color: Colors.white,
                               ),
                             ),
                       const Icon(
@@ -301,7 +293,6 @@ class _SelectImagePageState extends State<SelectImagePage>
                         )}.."
                       : e.folder,
                   style: const TextStyle(
-                    color: Colors.white,
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),

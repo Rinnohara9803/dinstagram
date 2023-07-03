@@ -58,25 +58,35 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UserPostsProvider>(
           create: (context) => UserPostsProvider(),
         ),
+
+        ChangeNotifierProvider<ThemeProvider>(
+          create: (context) => ThemeProvider(),
+        ),
       ],
-      child: MaterialApp(
-        navigatorKey: navigatorKey,
-        title: 'Dinstagram',
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeData, _) {
+          return MaterialApp(
+            navigatorKey: navigatorKey,
+            title: 'Dinstagram',
 
-        // themes manager
-        theme: getApplicationTheme(),
-        home: const SplashPage(),
+            // themes manager
+            theme: themeData.isLightTheme
+                ? getLightApplicationTheme()
+                : getDarkApplicationTheme(),
+            home: const SplashPage(),
 
-        // named page-routes
-        routes: {
-          LoginPage.routename: (context) => const LoginPage(),
-          RegisterWithEmailPageOne.routename: (context) =>
-              const RegisterWithEmailPageOne(),
-          RegisterWithPhonePageOne.routename: (context) =>
-              const RegisterWithPhonePageOne(),
-          VerifyEmailPage.routename: (context) => const VerifyEmailPage(),
-          InitialPage.routename: (context) => const InitialPage(),
-          SelectImagePage.routename: (context) => const SelectImagePage(),
+            // named page-routes
+            routes: {
+              LoginPage.routename: (context) => const LoginPage(),
+              RegisterWithEmailPageOne.routename: (context) =>
+                  const RegisterWithEmailPageOne(),
+              RegisterWithPhonePageOne.routename: (context) =>
+                  const RegisterWithPhonePageOne(),
+              VerifyEmailPage.routename: (context) => const VerifyEmailPage(),
+              InitialPage.routename: (context) => const InitialPage(),
+              SelectImagePage.routename: (context) => const SelectImagePage(),
+            },
+          );
         },
       ),
     );

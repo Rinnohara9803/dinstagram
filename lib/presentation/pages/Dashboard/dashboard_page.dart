@@ -1,5 +1,6 @@
 import 'package:dinstagram/presentation/pages/Chat/chats_page.dart';
 import 'package:dinstagram/presentation/pages/Profile/profile_page.dart';
+import 'package:dinstagram/presentation/resources/themes_manager.dart';
 import 'package:dinstagram/providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -142,7 +143,6 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
         body: Column(
           children: [
             conditionalAppBars(),
@@ -242,10 +242,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                 ],
                 type: BottomNavigationBarType.fixed,
-                backgroundColor: Colors.black,
                 currentIndex: _selectedIndex,
-                selectedItemColor: Colors.white,
-                unselectedItemColor: Colors.white,
                 iconSize: 25,
                 onTap: _onItemTapped,
                 elevation: 10,

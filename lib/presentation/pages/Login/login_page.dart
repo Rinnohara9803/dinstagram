@@ -95,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   iconData: Icons.mail_outline,
                   autoFocus: false,
                 ),
+
                 SizedBoxConstants.sizedboxh10,
                 GeneralTextFormField(
                   hasPrefixIcon: true,

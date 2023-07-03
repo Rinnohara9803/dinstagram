@@ -6,15 +6,10 @@ class GradientsConstants {
   static LinearGradient linearGradient0 = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    stops: const [
-      0.2,
-      0.5,
-      0.2,
-    ],
     colors: [
-      ColorsManager.lightRed,
-      ColorsManager.lightBlue,
-      ColorsManager.lightGreen,
+      const Color.fromARGB(255, 198, 191, 191),
+      Color.fromARGB(255, 231, 124, 159),
+      Colors.blue,
     ],
   );
 }
