@@ -12,7 +12,8 @@ import 'widgets/custom_popup_menubutton.dart';
 
 class DashboardPage extends StatefulWidget {
   static const String routename = '/dashboard-page';
-  const DashboardPage({super.key});
+  final Function navigateToChatsPage;
+  const DashboardPage({super.key, required this.navigateToChatsPage});
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -25,6 +26,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   int _selectedIndex = 0;
 
+  // returns currently running page-view to home page
   void _returnToHomePage() {
     setState(() {
       _selectedIndex = 0;
@@ -32,8 +34,10 @@ class _DashboardPageState extends State<DashboardPage> {
     });
   }
 
+  // navigate to select image page
   void _onItemTapped(int index) async {
     if (index == 2) {
+      // get read-external-storage permission
       var permission = await Permission.storage.request();
       if (permission == PermissionStatus.granted) {
         // ignore: use_build_context_synchronously
@@ -52,6 +56,7 @@ class _DashboardPageState extends State<DashboardPage> {
   bool _isVisible = true;
   late ScrollController _scrollController;
 
+  // conditional app bars for different page views
   Widget conditionalAppBars() {
     if (_selectedIndex == 0) {
       return AnimatedContainer(
@@ -82,11 +87,11 @@ class _DashboardPageState extends State<DashboardPage> {
                   Icons.favorite_outline,
                 ),
                 const SizedBox(
-                  width: 10,
+                  width: 20,
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(ChatsPage.routename);
+                    widget.navigateToChatsPage();
                   },
                   child: const Icon(
                     Icons.message_outlined,
@@ -119,6 +124,7 @@ class _DashboardPageState extends State<DashboardPage> {
     super.dispose();
   }
 
+  // handle scrollings to hide and show appbar/bottom-nav-bar
   void _handleScroll() {
     if (_scrollController.position.userScrollDirection ==
         ScrollDirection.forward) {
@@ -140,6 +146,8 @@ class _DashboardPageState extends State<DashboardPage> {
         body: Column(
           children: [
             conditionalAppBars(),
+
+            // page view of 5 pages namely: home,search,add-post,reels and profile
             Expanded(
               child: PageView(
                 scrollBehavior: null,
@@ -151,14 +159,23 @@ class _DashboardPageState extends State<DashboardPage> {
                   });
                 },
                 children: [
+                  // home page
                   HomePage(
                     scrollController: _scrollController,
                   ),
+
+                  // search-users page
                   SearchPage(
                     returnToHomePage: _returnToHomePage,
                   ),
-                  const Page3(),
+
+                  // add post page - dummy
+                  const SizedBox(),
+
+                  // reels page
                   const Page4(),
+
+                  // profile page
                   ProfilePage(
                     chatUser: Provider.of<ProfileProvider>(context).chatUser,
                     navigateBack: _returnToHomePage,
@@ -168,6 +185,8 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ],
         ),
+
+        // primary bottom-nav-bar for dashboard
         bottomNavigationBar: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           height: _isVisible ? 60 : 0,

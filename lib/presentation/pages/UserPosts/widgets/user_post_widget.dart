@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dinstagram/utilities/my_date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../apis/chat_apis.dart';
 import '../../../../models/chat_user.dart';
 import '../../../../models/user_post.dart';
-import '../../../../utilities/color_filters.dart';
 import 'animated_favorite_widget.dart';
 import 'expandable_text_widget.dart';
 
@@ -341,8 +341,12 @@ class _UserPostWidgetState extends State<UserPostWidget>
               textAlign: TextAlign.start,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: 12,
               ),
             ),
+          ),
+          const SizedBox(
+            height: 3,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -360,6 +364,24 @@ class _UserPostWidgetState extends State<UserPostWidget>
                   caption: post.caption,
                 );
               },
+            ),
+          ),
+          const SizedBox(
+            height: 3,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
+            child: Text(
+              MyDateUtil.getUsersPostTime(
+                context: context,
+                time: post.id,
+              ),
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
+              ),
             ),
           ),
         ],

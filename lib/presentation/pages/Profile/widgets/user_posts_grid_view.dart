@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../../providers/user_posts_provider.dart';
-import '../../../../utilities/color_filters.dart';
 
 class UserPostsGridView extends StatefulWidget {
   final ChatUser chatUser;
