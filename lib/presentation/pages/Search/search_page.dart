@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dinstagram/apis/user_apis.dart';
 import 'package:dinstagram/models/chat_user.dart';
 import 'package:dinstagram/presentation/pages/Search/widgets/search_chat_user_card.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +81,7 @@ class _SearchPageState extends State<SearchPage> {
       child: TextField(
         controller: _searchController,
         textAlign: TextAlign.start,
-        textAlignVertical: TextAlignVertical.center,
+        textAlignVertical: TextAlignVertical.bottom,
         cursorColor: Colors.white,
         style: const TextStyle(
           fontSize: 12,
@@ -90,6 +89,7 @@ class _SearchPageState extends State<SearchPage> {
         cursorHeight: 13,
         decoration: InputDecoration(
           hintText: 'Search...',
+          hintStyle: const TextStyle(fontSize: 12, color: Colors.white),
           isDense: true,
           fillColor: const Color.fromARGB(255, 77, 76, 76),
           filled: true,

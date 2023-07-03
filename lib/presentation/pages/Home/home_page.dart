@@ -2,7 +2,6 @@ import 'package:dinstagram/providers/user_posts_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
-import '../../../providers/profile_provider.dart';
 import '../../resources/constants/sizedbox_constants.dart';
 import '../UserPosts/widgets/user_post_widget.dart';
 
@@ -262,11 +261,28 @@ class _HomePageState extends State<HomePage>
                   return Consumer<UserPostsProvider>(
                     builder: (context, postData, child) {
                       if (postData.latestUserPosts.isEmpty) {
-                        return const SizedBox(
-                          height: 100,
+                        return SizedBox(
+                          height: 400,
                           child: Center(
-                            child: Text(
-                              'No posts to view.',
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'No posts to view.',
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    await Provider.of<UserPostsProvider>(
+                                            context,
+                                            listen: false)
+                                        .fetchLatestPosts();
+                                  },
+                                  child: const Text(
+                                    'Refresh',
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         );

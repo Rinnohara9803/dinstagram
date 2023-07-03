@@ -1,3 +1,4 @@
+import 'package:dinstagram/presentation/pages/Chat/chats_page.dart';
 import 'package:dinstagram/presentation/pages/Dashboard/dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,33 +13,44 @@ class InitialPage extends StatefulWidget {
   State<InitialPage> createState() => _InitialPageState();
 }
 
-class _InitialPageState extends State<InitialPage> {
+class _InitialPageState extends State<InitialPage>
+    with TickerProviderStateMixin {
+  TabController? _tabController;
+
+  void navigateToChatsPage() {
+    _tabController!.animateTo(2);
+  }
+
+  void navigateBackToHomePage() {
+    _tabController!.animateTo(1);
+  }
+
   // pages for tab-bar-view
-  final List<Widget> pages = [
-    Container(
-      color: Colors.red,
-      child: const Center(
-        child: Text(
-          'Page 1',
-          style: TextStyle(fontSize: 24, color: Colors.white),
-        ),
-      ),
-    ),
-    // dashboard page
-    const DashboardPage(),
-    Container(
-      color: Colors.blue,
-      child: const Center(
-        child: Text(
-          'Page 3',
-          style: TextStyle(fontSize: 24, color: Colors.white),
-        ),
-      ),
-    ),
-  ];
+  List<Widget>? pages;
 
   @override
   void initState() {
+    pages = [
+      // open-camera page
+      Container(
+        color: Colors.red,
+        child: const Center(
+          child: Text(
+            'Page 1',
+            style: TextStyle(fontSize: 24, color: Colors.white),
+          ),
+        ),
+      ),
+      // dashboard page
+      DashboardPage(
+        navigateToChatsPage: navigateToChatsPage,
+      ),
+
+      // chats page
+      ChatsPage(
+        navigateBack: navigateBackToHomePage,
+      ),
+    ];
     // update the users online status
     ChatApis.updateActiveStatus(true);
     SystemChannels.lifecycle.setMessageHandler((message) {
@@ -54,6 +66,11 @@ class _InitialPageState extends State<InitialPage> {
       return Future.value(message);
     });
     super.initState();
+    _tabController = TabController(
+      length: pages!.length,
+      vsync: this,
+      initialIndex: 1,
+    );
   }
 
   @override
@@ -62,10 +79,11 @@ class _InitialPageState extends State<InitialPage> {
       child: Scaffold(
         body: DefaultTabController(
           initialIndex: 1,
-          length: pages.length,
+          length: pages!.length,
           child: Scaffold(
             body: TabBarView(
-              children: pages,
+              controller: _tabController,
+              children: pages!,
             ),
           ),
         ),

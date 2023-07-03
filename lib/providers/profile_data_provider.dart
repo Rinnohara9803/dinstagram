@@ -1,17 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dinstagram/apis/user_apis.dart';
 import 'package:dinstagram/models/chat_user.dart';
-import 'package:dinstagram/models/user_post.dart';
 import 'package:flutter/material.dart';
 
 class ProfileDataProvider with ChangeNotifier {
   int _followings = 0;
   int _followers = 0;
-  int _posts = 0;
 
   List<String> _followersList = [];
   List<String> _followingsList = [];
-  List<UserPostModel> _userPosts = [];
 
   int get followings => _followings;
   int get followers => _followers;

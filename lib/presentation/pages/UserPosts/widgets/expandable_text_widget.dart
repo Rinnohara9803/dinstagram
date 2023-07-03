@@ -89,7 +89,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
                   _isExpanded ? 'Show less' : 'Show more',
                   style: const TextStyle(
                     color: Colors.grey,
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                 ),
               ),

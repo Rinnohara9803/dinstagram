@@ -4,8 +4,6 @@ import 'package:dinstagram/models/user_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../models/chat_user.dart';
-
 class UserPostsProvider with ChangeNotifier {
   final firestore = FirebaseFirestore.instance;
   final user = FirebaseAuth.instance.currentUser;
@@ -125,7 +123,6 @@ class UserPostsProvider with ChangeNotifier {
       });
       _latestUserPosts = listOfPosts;
       notifyListeners();
-      print(_latestUserPosts.length);
     } catch (e) {
       print(e.toString());
       return Future.error(e.toString());
