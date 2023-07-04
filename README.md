@@ -1,16 +1,34 @@
-# instaclone
+<h1 align="center">
+  <br>
+    <img src="images/dinstagram.png" alt="mhicha" width="100" height="100">
+  <br>
+    dinstagram
+  <br>
+</h1>
 
-A new Flutter project.
+
+An intagram-clone project
+
+<br/>
+
+![GitHub all releases](https://img.shields.io/github/downloads/Rinnohara9803/dinstagram/total)
+
+<br/>
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To clone and run this application, you'll need [Git](https://git-scm.com) and [Flutter](https://docs.flutter.dev/get-started/install) on your computer. From your command line:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+# Clone this repository
+$ git clone git@github.com:Rinnohara9803/dinstagram.git
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Go into the repository
+$ cd dinstagram
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Install dependencies
+$ dart pub get
+
+# Run the app
+$ flutter run
+```
