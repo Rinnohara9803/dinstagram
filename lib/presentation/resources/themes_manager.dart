@@ -17,10 +17,13 @@ class ThemeProvider with ChangeNotifier {
 
 ThemeData getDarkApplicationTheme() {
   return ThemeData(
+    // primary color
+    primaryColor: Colors.black,
+
     // icon buttom theme
     iconButtonTheme: IconButtonThemeData(
       style: ButtonStyle(
-        iconColor: MaterialStateProperty.all(
+        iconColor: MaterialStatePropertyAll(
           ColorsManager.white,
         ),
       ),
@@ -43,6 +46,10 @@ ThemeData getDarkApplicationTheme() {
       titleMedium: const TextStyle(
         color: Colors.white,
         fontSize: 20,
+      ),
+      titleSmall: const TextStyle(
+        color: Colors.white,
+        fontSize: 17,
       ),
       bodyMedium: TextStyle(
         color: ColorsManager.white,
@@ -115,6 +122,7 @@ ThemeData getDarkApplicationTheme() {
     // app bar theme
     appBarTheme: const AppBarTheme(
       color: Colors.black,
+      elevation: 0,
     ),
 
     //
@@ -153,15 +161,38 @@ ThemeData getDarkApplicationTheme() {
         ),
       ),
     ),
+
+    //
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: Color.fromARGB(255, 29, 28, 28),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(
+            20,
+          ),
+          topLeft: Radius.circular(
+            20,
+          ),
+        ),
+      ),
+    ),
+
+    //
+    checkboxTheme: const CheckboxThemeData(
+      fillColor: MaterialStatePropertyAll(Colors.white),
+    ),
   );
 }
 
 ThemeData getLightApplicationTheme() {
   return ThemeData(
+    // primary color
+    primaryColor: Colors.white,
+
     // icon buttom theme
-    iconButtonTheme: IconButtonThemeData(
+    iconButtonTheme: const IconButtonThemeData(
       style: ButtonStyle(
-        iconColor: MaterialStateProperty.all(
+        iconColor: MaterialStatePropertyAll(
           Colors.black,
         ),
       ),
@@ -172,7 +203,7 @@ ThemeData getLightApplicationTheme() {
       color: Colors.black,
     ),
     primaryIconTheme: const IconThemeData(
-      color: Colors.white,
+      color: Colors.black,
     ),
 
     // text themes
@@ -184,6 +215,10 @@ ThemeData getLightApplicationTheme() {
       titleMedium: TextStyle(
         color: Colors.black,
         fontSize: 20,
+      ),
+      titleSmall: TextStyle(
+        color: Colors.black,
+        fontSize: 17,
       ),
       bodyMedium: TextStyle(
         color: Colors.black,
@@ -208,7 +243,7 @@ ThemeData getLightApplicationTheme() {
     inputDecorationTheme: InputDecorationTheme(
       suffixIconColor: Colors.grey,
       prefixIconColor: Colors.grey,
-      fillColor: const Color.fromARGB(255, 53, 52, 52),
+      fillColor: Colors.black12,
       filled: true,
       labelStyle: TextStyle(
         color: ColorsManager.white,
@@ -250,12 +285,13 @@ ThemeData getLightApplicationTheme() {
 
     // pop up menu theme
     popupMenuTheme: const PopupMenuThemeData(
-      color: Colors.black,
+      color: Colors.white,
     ),
 
     // app bar theme
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
+      elevation: 0,
     ),
 
     //
@@ -293,6 +329,26 @@ ThemeData getLightApplicationTheme() {
           ),
         ),
       ),
+    ),
+
+    //
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(
+            20,
+          ),
+          topLeft: Radius.circular(
+            20,
+          ),
+        ),
+      ),
+    ),
+
+    //
+    checkboxTheme: const CheckboxThemeData(
+      fillColor: MaterialStatePropertyAll(Colors.black),
     ),
   );
 }

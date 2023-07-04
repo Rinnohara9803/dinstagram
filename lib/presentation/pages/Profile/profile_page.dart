@@ -1,3 +1,4 @@
+import 'package:dinstagram/presentation/pages/Profile/widgets/open_settings_widget.dart';
 import 'package:dinstagram/presentation/pages/Profile/widgets/profile_data_widget.dart';
 import 'package:dinstagram/presentation/pages/Profile/widgets/user_posts_grid_view.dart';
 import 'package:dinstagram/presentation/resources/themes_manager.dart';
@@ -101,12 +102,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 Icons.add_box_outlined,
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.menu,
-                              ),
-                            ),
+                            const OpenSettingsWidget(),
                           ],
                         ),
                     ],
@@ -419,13 +415,16 @@ class _ProfilePageState extends State<ProfilePage>
                                 Expanded(
                                   child: Column(
                                     children: [
-                                      const TabBar(
+                                      TabBar(
                                         indicatorSize: TabBarIndicatorSize.tab,
                                         indicatorWeight: 2,
-                                        labelStyle: TextStyle(
+                                        indicatorColor: Theme.of(context)
+                                            .tabBarTheme
+                                            .indicatorColor,
+                                        labelStyle: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
-                                        tabs: [
+                                        tabs: const [
                                           Tab(
                                             icon: Icon(
                                               Icons.grid_on_sharp,

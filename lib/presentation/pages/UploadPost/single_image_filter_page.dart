@@ -165,7 +165,6 @@ class _SingleImageFilterPageState extends State<SingleImageFilterPage> {
                         child: const Text(
                           'Cancel',
                           style: TextStyle(
-                            color: Colors.white,
                             fontSize: 18,
                           ),
                         ),
@@ -181,7 +180,6 @@ class _SingleImageFilterPageState extends State<SingleImageFilterPage> {
                         child: const Text(
                           'Done',
                           style: TextStyle(
-                            color: Colors.white,
                             fontSize: 18,
                           ),
                         ),

@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:dinstagram/presentation/pages/UploadPost/widgets/image_show_widget.dart';
 import 'package:flutter_storage_path/flutter_storage_path.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../models/image_file_model.dart';
+import '../../resources/themes_manager.dart';
 import 'apply_filters_page.dart';
 
 class SelectImagePage extends StatefulWidget {
@@ -180,7 +182,10 @@ class _SelectImagePageState extends State<SelectImagePage>
                   // drop-down to swtich between different image folders
                   DropdownButtonHideUnderline(
                     child: DropdownButton<ImageFileModel>(
-                      iconEnabledColor: Colors.white,
+                      iconEnabledColor:
+                          Provider.of<ThemeProvider>(context).isLightTheme
+                              ? Colors.black
+                              : Colors.white,
                       items: getItems(),
                       onChanged: (ImageFileModel? d) {
                         assert(d!.files.isNotEmpty);
@@ -190,7 +195,10 @@ class _SelectImagePageState extends State<SelectImagePage>
                         });
                       },
                       value: selectedModel,
-                      dropdownColor: const Color.fromARGB(255, 72, 71, 71),
+                      dropdownColor:
+                          Provider.of<ThemeProvider>(context).isLightTheme
+                              ? Colors.white
+                              : const Color.fromARGB(255, 72, 71, 71),
                     ),
                   ),
 

@@ -143,12 +143,13 @@ class _HomePageState extends State<HomePage>
                                   ),
                                 ],
                               ),
-                              const Positioned(
+                              Positioned(
                                 bottom: 20,
                                 right: -3,
                                 child: CircleAvatar(
                                   radius: 12,
-                                  backgroundColor: Colors.black,
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
                                   child: CircleAvatar(
                                     radius: 10,
                                     backgroundColor: Colors.blue,
@@ -207,7 +208,9 @@ class _HomePageState extends State<HomePage>
                                             child: Center(
                                               child: CircleAvatar(
                                                 radius: 34,
-                                                backgroundColor: Colors.black,
+                                                backgroundColor:
+                                                    Theme.of(context)
+                                                        .primaryColor,
                                                 child: CircleAvatar(
                                                   radius: 31,
                                                   backgroundImage: NetworkImage(

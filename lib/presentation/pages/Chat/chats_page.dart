@@ -27,8 +27,9 @@ class _ChatsPageState extends State<ChatsPage> {
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.arrow_back,
+                color: Theme.of(context).iconTheme.color,
               ),
               onPressed: () {
                 widget.navigateBack();
