@@ -23,7 +23,6 @@ class CustomPopUpMenuButton extends StatelessWidget {
                 horizontal: 10,
               ),
               height: 48,
-              color: const Color.fromARGB(255, 38, 37, 37),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,7 +30,6 @@ class CustomPopUpMenuButton extends StatelessWidget {
                   Text(
                     'Following',
                     style: TextStyle(
-                      color: Colors.white,
                       fontSize: 14,
                     ),
                   ),
@@ -51,15 +49,13 @@ class CustomPopUpMenuButton extends StatelessWidget {
                 horizontal: 10,
               ),
               height: 48,
-              color: const Color.fromARGB(255, 38, 37, 37),
-              child:  const Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children:  [
+                children: [
                   Text(
                     'Favourites',
                     style: TextStyle(
-                      color: Colors.white,
                       fontSize: 14,
                     ),
                   ),

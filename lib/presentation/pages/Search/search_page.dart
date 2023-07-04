@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dinstagram/models/chat_user.dart';
 import 'package:dinstagram/presentation/pages/Search/widgets/search_chat_user_card.dart';
+import 'package:dinstagram/presentation/resources/themes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 
 class SearchPage extends StatefulWidget {
   final Function returnToHomePage;
@@ -82,17 +84,19 @@ class _SearchPageState extends State<SearchPage> {
         controller: _searchController,
         textAlign: TextAlign.start,
         textAlignVertical: TextAlignVertical.bottom,
-        cursorColor: Colors.white,
+        cursorColor: Provider.of<ThemeProvider>(context).isLightTheme
+            ? Colors.black
+            : Colors.white,
         style: const TextStyle(
           fontSize: 12,
         ),
         cursorHeight: 13,
         decoration: InputDecoration(
           hintText: 'Search...',
-          hintStyle: const TextStyle(fontSize: 12, color: Colors.white),
+          hintStyle: const TextStyle(
+            fontSize: 12,
+          ),
           isDense: true,
-          fillColor: const Color.fromARGB(255, 77, 76, 76),
-          filled: true,
           prefixIcon: const Icon(
             Icons.search,
             color: Colors.grey,

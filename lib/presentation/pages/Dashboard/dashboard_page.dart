@@ -220,7 +220,10 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                   BottomNavigationBarItem(
                     icon: CircleAvatar(
-                      backgroundColor: Colors.white,
+                      backgroundColor:
+                          Provider.of<ThemeProvider>(context).isLightTheme
+                              ? Colors.black
+                              : Colors.white,
                       radius: _selectedIndex == 4 ? 14 : 12,
                       child: CircleAvatar(
                         radius: 12,
